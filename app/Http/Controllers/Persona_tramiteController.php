@@ -8,10 +8,21 @@ use App\Http\Requests;
 
 class Persona_tramiteController extends Controller
 {
-    public function index()
+    public function listar_x_tipo_tramite($tra_id)
     {
-    	$pers_tra=\App\Models\Persona_Tramite::all();
-        return response()->json(['status'=>'ok','mensaje'=>'exito','persona_tramite'=>$pers_tra],200); 
+        /*  
+            1: lista de tramites de carnet sanitario
+            2: lista de tramites de certificado sanitario
+        */
+        $pers_tramite=Persona_Tramite::select('tramite.tra_nombre', 'persona.per_id','persona.per_ci','persona.per_nombres','persona.per_apellido_primero','persona.per_apellido_segundo','persona.per_fecha_nacimiento', 'persona.per_genero','persona.per_ocupacion','pt_tipo_tramite')
+        ->join('tramite','tramite.tra_id','=','persona_tramite.tra_id')
+        ->join('persona', 'persona.per_id', '=', 'persona_tramite.per_id')
+        ->where('persona_tramite.tra_id', $tra_id)
+        ->get();
+
+
+
+        return response()->json(['status'=>'ok','mensaje'=>'exito','persona_tramite'=>$pers_tramite],200);
     }
 
     public function store(Request $request)
