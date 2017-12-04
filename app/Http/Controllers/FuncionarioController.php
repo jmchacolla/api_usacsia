@@ -34,7 +34,9 @@ class FuncionarioController extends Controller
 
         return response()->json(['status'=>'ok', 'funcionario'=>$funcionario], 200);
     }
-
+    public function listar()
+    {
+    }
     // crear funcionario cuando la persona no existe
     public function crear_funcionario(Request $request)
     {
