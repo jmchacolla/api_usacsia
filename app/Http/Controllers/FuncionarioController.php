@@ -168,7 +168,7 @@ class FuncionarioController extends Controller
             ], 200
         );
     }
-    public function listaaa()
+    public function liswen()
     {
         echo "string";
     }
