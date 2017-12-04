@@ -39,9 +39,6 @@ Route::group(['middleware' => 'cors'], function ()
     Route::resource('prueba_laboratorio','Prueba_laboratorioController', ['only'=>['index','show','store','update','destroy']]);
     Route::resource('prueba_par','Prueba_parController', ['only'=>['index','show','store','update','destroy']]);
 
-
-
-
     /*wen*/
     Route::get('ambiente','AmbienteController@index');
     Route::post('ambiente','AmbienteController@store');
@@ -100,7 +97,10 @@ Route::group(['middleware' => 'cors'], function ()
     //operaciones con firma para crear debe corresponder al cargo
     Route::resource('funcionario/firma','FirmaController',['only' => ['index', 'store', 'update', 'show']]);
 
-    /*----*/
+    // Route::get('fecha', 'HorarioController@index');
+    // index input(fun_id)
+    // store input(ser_id, amb_id, fun_id, hor_fecha_inicio, hor_fecha_final)
+    Route::resource('horario', 'HorarioController', ['only' =>['index', 'store', 'update', 'show']]);
     
 });
 
