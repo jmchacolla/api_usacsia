@@ -14,8 +14,8 @@
 Route::group(['middleware' => 'cors'], function () 
 {  
 
-    Route::get('/', function () {
-        return view('welcome API_USACSIA');
+     Route::get('/', function () {
+        return response()->json(['status'=>'ok','aplicacion'=>'welcome API_USACSIA'], 200);
     });
     Route::get('pais','PaisController@index');
     Route::post('pais','PaisController@store');
