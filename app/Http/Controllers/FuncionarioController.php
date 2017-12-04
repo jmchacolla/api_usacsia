@@ -114,14 +114,14 @@ class FuncionarioController extends Controller
             }
 
 
-        $funcionario= \App\Models\Funcionario::find($fun_id);
+        $funcionario= Funcionario::find($fun_id);
 
         $per_id=$funcionario->per_id;
 
-        $persona=\App\Models\Persona::find($per_id);
+        $persona=Persona::find($per_id);
 
         $zon_id=$persona->zon_id;
-        $zona=\App\Models\Zona::find($zon_id);
+        $zona=Zona::find($zon_id);
 
        // $direccion=\awebss\Models\Direccion::where('per_id',$per_id)->get();
         $resultado=compact('persona','funcionario','zona');
