@@ -34,8 +34,23 @@ class FuncionarioController extends Controller
 
         return response()->json(['status'=>'ok', 'funcionario'=>$funcionario], 200);
     }
-    public function listar()
+   public function destroy($fun_id)
     {
+        $funcionario = Funcionario::find($fun_id);
+
+        if (!$funcionario)
+        {    
+            return response()->json(["mensaje"=>"no se encuentra una persona_tramite con ese codigo"]);
+         }
+
+       
+        $funcionario->delete();
+
+        return response()->json([
+
+            "mensaje" => "eliminado Funcionario"
+            ], 200
+        );
     }
     // crear funcionario cuando la persona no existe
     public function crear_funcionario(Request $request)
