@@ -147,8 +147,6 @@ class FuncionarioController extends Controller
         $municipio=Municipio::find($zona->mun_id);
         $provincia=Provincia::find($municipio->mun_id);
         $departamento=Departamento::find($provincia->dep_id);
-
-       // $direccion=\awebss\Models\Direccion::where('per_id',$per_id)->get();
         $resultado=compact('persona', 'imagen', 'funcionario','zona', 'municipio', 'provincia', 'departamento');
         return response()->json(['status'=>'ok',"msg" => "exito",'funcionario'=>$resultado],200); 
     }
