@@ -136,12 +136,20 @@ class FuncionarioController extends Controller
         $per_id=$funcionario->per_id;
 
         $persona=Persona::find($per_id);
-
+        if ($persona->per_genero='M'|$persona->per_genero='m') {
+            $persona->per_genero='MASCULINO';
+        }else{
+            $persona->per_genero='FEMENINO';
+        }
+        $imagen=Imagen::where('per_id', $per_id)->get();
         $zon_id=$persona->zon_id;
         $zona=Zona::find($zon_id);
+        $municipio=Municipio::find($zona->mun_id);
+        $provincia=Provincia::find($municipio->mun_id);
+        $departamento=Departamento::find($provincia->dep_id);
 
        // $direccion=\awebss\Models\Direccion::where('per_id',$per_id)->get();
-        $resultado=compact('persona','funcionario','zona');
+        $resultado=compact('persona', 'imagen', 'funcionario','zona', 'municipio', 'provincia', 'departamento');
         return response()->json(['status'=>'ok',"msg" => "exito",'funcionario'=>$resultado],200); 
     }
 
