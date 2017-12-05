@@ -14,8 +14,8 @@
 Route::group(['middleware' => 'cors'], function () 
 {  
 
-    Route::get('/', function () {
-        return view('welcome API_USACSIA');
+     Route::get('/', function () {
+        return response()->json(['status'=>'ok','aplicacion'=>'welcome API_USACSIAS JAJAJA'], 200);
     });
     Route::get('pais','PaisController@index');
     Route::post('pais','PaisController@store');
@@ -58,6 +58,7 @@ Route::group(['middleware' => 'cors'], function ()
     Route::resource('tramite','TramiteController',['only' => ['store', 'update', 'destroy', 'show']]);
 /*PERSONA_TRAMITE*/
     Route::resource('pers_tra','Persona_TramiteController',['only' => ['store', 'update', 'destroy', 'show','index']]);
+    Route::resource('tramites_x_tipo_tramite/{tra_id}','Persona_TramiteController@listar_x_tipo_tramite');
 /*PRUEBA MEDICA*/
     Route::resource('prueba_medica','Prueba_MedicaController',['only' => ['store', 'update', 'destroy', 'show','index']]);
 /*PRUEBA ENFERMEDAD*/
