@@ -5,14 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Http\Requests;
-use \App\Models;
+use \App\Models\Ambiente;
+use \App\Models\Laboratorio;
 
 class LaboratorioController extends Controller
 {
     public function index()
     {
-    	$laboratorios=\App\Models\Laboratorio::all();
-        return response()->json(['status'=>'ok','mensaje'=>'exito','laboratorio'=>$laboratorios],200); 
+    	$laboratorios=Ambiente::select('ambiente.amb_id','usa_id','amb_nombre','amb_descripcion','laboratorio.lab_id','lab_cod','funcionario.fun_id','fun_cargo','persona.per_id','per_nombres','per_apellido_primero','per_apellido_segundo')
+        ->join('laboratorio','laboratorio.amb_id','=','ambiente.amb_id')
+        ->join('funcionario','funcionario.fun_id','=','laboratorio.fun_id')
+        ->join('persona','persona.per_id','=','funcionario.per_id')
+        ->get();
+
+        return response()->json(['status'=>'ok','mensaje'=>'exito','laborato'=>$laboratorios],200); 
     }
     public function store(Request $request)
     {
@@ -26,7 +32,7 @@ class LaboratorioController extends Controller
         {
             return $validator->errors()->all();
 		}  
-    	$laboratorios = new \App\Models\Laboratorio();
+    	$laboratorios = new Laboratorio();
 		$laboratorios->amb_id=$request->amb_id;
 		$laboratorios->fun_id=$request->fun_id;
 		$laboratorios->lab_cod=$request->lab_cod;
@@ -50,7 +56,7 @@ class LaboratorioController extends Controller
             return $validator->errors()->all();
         }*/
         
-        $ambientes = new \App\Models\Ambiente();
+        $ambientes = new Ambiente();
         $ambientes->usa_id = $request->usa_id;
         $ambientes->amb_nombre= $request->amb_nombre;
         $ambientes->amb_tipo= $request->amb_tipo;
@@ -60,7 +66,7 @@ class LaboratorioController extends Controller
 
          //creando laboratorio
 
-        $laboratorios = new \App\Models\Laboratorio();
+        $laboratorios = Laboratorio();
         $laboratorios->amb_id=$ambientes->amb_id;
         $laboratorios->fun_id=$request->fun_id;
         $laboratorios->lab_cod=$request->lab_cod;
@@ -91,9 +97,9 @@ class LaboratorioController extends Controller
        /* $ambientes->userid_at='2';*/
         $ambientes->save();
 
-        $laboratorio = \App\Models\Laboratorio::where('amb_id', $amb_id)->get()->first();
+        $laboratorio = Laboratorio::where('amb_id', $amb_id)->get()->first();
         $lab_id=$laboratorio->lab_id;
-        $laboratorios= \App\Models\Laboratorio::find($lab_id);
+        $laboratorios= Laboratorio::find($lab_id);
 
 
        
@@ -111,14 +117,14 @@ class LaboratorioController extends Controller
 
      public function show($amb_id)
     {
-        $ambientes= \App\Models\Ambiente::find($amb_id);
+        $ambientes= Ambiente::find($amb_id);
         if (!$ambientes)
         {
 
             return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra el ambiente consultorio con ese código.'])],404);
         }
         
-       $laboratorios= \App\Models\Laboratorio::where('amb_id',$amb_id)->get()->first();
+       $laboratorios= Laboratorio::where('amb_id',$amb_id)->get()->first();
        if (!$laboratorios)
         {
             return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un laboratorio en el ambiente'])],404);
@@ -143,7 +149,7 @@ class LaboratorioController extends Controller
     //lista solo laboratorios
      public function listar_laboratorios()
     {
-        $laboratorios=\App\Models\Ambiente::select('ambiente.amb_id','usa_id','amb_nombre','amb_descripcion','laboratorio.lab_id','lab_cod','funcionario.fun_id','fun_cargo','persona.per_id','per_nombres','per_apellido_primero','per_apellido_segundo')
+        $laboratorios= Ambiente::select('ambiente.amb_id','usa_id','amb_nombre','amb_descripcion','laboratorio.lab_id','lab_cod','funcionario.fun_id','fun_cargo','persona.per_id','per_nombres','per_apellido_primero','per_apellido_segundo')
         ->join('laboratorio','laboratorio.amb_id','=','ambiente.amb_id')
         ->join('funcionario','funcionario.fun_id','=','laboratorio.fun_id')
         ->join('persona','persona.per_id','=','funcionario.per_id')
@@ -153,7 +159,7 @@ class LaboratorioController extends Controller
     }
     public function destroy($amb_id)
     {
-        $ambientes = \App\Models\Ambiente::find($amb_id);
+        $ambientes = Ambiente::find($amb_id);
 
         if (!$ambientes)
         {    

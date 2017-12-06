@@ -5,18 +5,27 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Http\Requests;
+use \App\Models\Consultorio;
+use \App\Models\Ambiente;
 
 class ConsultorioController extends Controller
 {
     
-	public function index()
+    public function index()
     {
-    	$consultorios=\App\Models\Consultorio::all();
-        return response()->json(['status'=>'ok','mensaje'=>'exito','consultorio'=>$consultorios],200); 
+        /*$consultorios=\App\Models\Consultorio::all();
+        return response()->json(['status'=>'ok','mensaje'=>'exito','consultorio'=>$consultorios],200); */
+        $consultorios= Ambiente::select('ambiente.amb_id','usa_id','amb_nombre','amb_descripcion','consultorio.con_id','con_cod')
+        ->join('consultorio','consultorio.amb_id','=','ambiente.amb_id')
+        ->where('amb_tipo',"CONSULTORIO")
+        ->get();
+       
+        return response()->json(['status'=>'ok','mensaje'=>'exito','consultorios'=>$consultorios],200); 
+   
     }
-	public function store(Request $request)
+    public function store(Request $request)
     {
-		$validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             
             'amb_id' => 'required',
             
@@ -25,14 +34,14 @@ class ConsultorioController extends Controller
         if ($validator->fails()) 
         {
             return $validator->errors()->all();
-		}  
-    	$consultorios= new \App\Models\Consultorio();
-		$consultorios->amb_id=$request->amb_id;
-		$consultorios->con_cod=$request->con_cod;
-		$consultorios->save();
+        }  
+        $consultorios= new \App\Models\Consultorio();
+        $consultorios->amb_id=$request->amb_id;
+        $consultorios->con_cod=$request->con_cod;
+        $consultorios->save();
 
-		
-		return response()->json(['status'=>'ok',"mensaje"=>"creado exitosamente","consultorio"=>$consultorios], 200);
+        
+        return response()->json(['status'=>'ok',"mensaje"=>"creado exitosamente","consultorio"=>$consultorios], 200);
 
     }
     public function crear_ambiente_consultorio(Request $request)
@@ -48,7 +57,7 @@ class ConsultorioController extends Controller
             return $validator->errors()->all();
         }*/
         
-        $ambientes = new \App\Models\Ambiente();
+        $ambientes = new Ambiente();
         $ambientes->usa_id = $request->usa_id;
         $ambientes->amb_nombre= $request->amb_nombre;
         $ambientes->amb_tipo= $request->amb_tipo;
@@ -58,12 +67,12 @@ class ConsultorioController extends Controller
 
          //creando consultorio
 
-        $consultorios= new \App\Models\Consultorio();
+        $consultorios= new Consultorio();
         
-		$consultorios->amb_id=$ambientes->amb_id;
-		$consultorios->con_cod=$request->con_cod;
-		$consultorios->userid_at='2';
-		$consultorios->save();
+        $consultorios->amb_id=$ambientes->amb_id;
+        $consultorios->con_cod=$request->con_cod;
+        $consultorios->userid_at='2';
+        $consultorios->save();
          
                 
         $resultado=compact('ambientes','consultorios');
@@ -79,16 +88,14 @@ class ConsultorioController extends Controller
 
     public function update(Request $request, $amb_id)
     {
-       $ambientes= \App\Models\Ambiente::find($amb_id);
+       $ambientes= Ambiente::find($amb_id);
 
        
        if (!$ambientes)
         {
             return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un ambiente con ese código.'])],404);
         }
-       // $ambiente = \App\Models\Ambiente::where('usa_id', $usa_id)->get()->first();
-       // $amb_id=$ambiente->amb_id;
-        //$ambientes= \App\Models\Ambiente::find($amb_id);
+    
         
         $ambientes->amb_nombre= $request->amb_nombre;
         $ambientes->amb_tipo= $request->amb_tipo;
@@ -101,9 +108,9 @@ class ConsultorioController extends Controller
        //$consultorios= \App\Models\Consultorio::find($con_id);
 
 
-        $consultorio = \App\Models\Consultorio::where('amb_id', $amb_id)->get()->first();
+        $consultorio = Consultorio::where('amb_id', $amb_id)->get()->first();
         $con_id=$consultorio->con_id;
-        $consultorios= \App\Models\Consultorio::find($con_id);
+        $consultorios= Consultorio::find($con_id);
 
        
         $consultorios->con_cod=$request->con_cod;
@@ -119,14 +126,14 @@ class ConsultorioController extends Controller
 
     public function show($amb_id)
     {
-        $ambientes= \App\Models\Ambiente::find($amb_id);
+        $ambientes= Ambiente::find($amb_id);
         if (!$ambientes)
         {
 
             return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra el ambiente consultorio con ese código.'])],404);
         }
         
-       $consultorios= \App\Models\Consultorio::where('amb_id',$amb_id)->get()->first();
+       $consultorios= Consultorio::where('amb_id',$amb_id)->get()->first();
        if (!$consultorios)
         {
             return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un consultorio en el ambiente'])],404);
@@ -138,27 +145,27 @@ class ConsultorioController extends Controller
         return response()->json(['status'=>'ok','ambiente'=>$resultado],200);
     }
 
-    public function listar_consultorios()
+/*    public function listar_consultorios()
     {
         $consultorios=\App\Models\Ambiente::select('ambiente.amb_id','usa_id','amb_nombre','amb_descripcion','consultorio.con_id','con_cod')
         ->join('consultorio','consultorio.amb_id','=','ambiente.amb_id')
         ->get();
        
         return response()->json(['status'=>'ok','mensaje'=>'exito','consultorios'=>$consultorios],200); 
-    }
+    }*/
 
     public function destroy($amb_id)
     {
-        $ambientes = \App\Models\Ambiente::find($amb_id);
+        $ambientes = Ambiente::find($amb_id);
 
         if (!$ambientes)
         {    
             return response()->json(["mensaje"=>"no se encuentra un ambiente con ese codigo"]);
          }
 
-        $consultorio = \App\Models\Consultorio::where('amb_id', $amb_id)->get()->first();
+        $consultorio = Consultorio::where('amb_id', $amb_id)->get()->first();
         $con_id=$consultorio->con_id;
-        $consultorios = \App\Models\Consultorio::find($con_id);
+        $consultorios = Consultorio::find($con_id);
 
         $consultorios->delete();
 
