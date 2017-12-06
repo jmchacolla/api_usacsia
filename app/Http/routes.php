@@ -110,6 +110,9 @@ Route::group(['middleware' => 'cors'], function ()
     // index input(fun_id)
     // store input(ser_id, amb_id, fun_id, hor_fecha_inicio, hor_fecha_final)
     Route::resource('horario', 'HorarioController', ['only' =>['index', 'store', 'update', 'show']]);
+
+    //JHON empresa
+    Route::resource('establecimiento_solicitante','EstablecimientoSolicitanteController', ['only' =>['index', 'store', 'update', 'show']]);
     
 });
 

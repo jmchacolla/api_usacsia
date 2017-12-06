@@ -10,7 +10,7 @@ use App\Models\Persona_tramite;
 use App\Models\Persona;
 use App\Models\Tramite;
 
-class Persona_tramiteController extends Controller
+class Persona_tramiteController extends Controllers
 
 {
     /*public function index()
