@@ -52,13 +52,11 @@ Route::group(['middleware' => 'cors'], function ()
     Route::post('ambiente','AmbienteController@store');
 
     /*CONSULTORIO*/
-    Route::resource('consultorio','ConsultorioController',['only' => ['store', 'update', 'destroy', 'show']]);
-    Route::get('consultorio','ConsultorioController@index');
+   Route::resource('consultorio','ConsultorioController',['only' => ['store', 'update', 'destroy', 'show','index']]);
     Route::post('ambiente_consultorio','ConsultorioController@crear_ambiente_consultorio');
     Route::get('lis_consultorio','ConsultorioController@listar_consultorios');
 /*LABORATORIO*/
-    Route::resource('laboratorio','LaboratorioController',['only' => ['store', 'update', 'destroy', 'show']]);
-    Route::get('laboratorio','LaboratorioController@index');
+    Route::resource('laboratorio','LaboratorioController',['only' => ['store', 'update', 'destroy', 'show','index']]);
     Route::post('ambiente_laboratorio','LaboratorioController@crear_ambiente_laboratorio');
     Route::get('lis_laboratorio','LaboratorioController@listar_laboratorios');
 /*TRAMITES*/
@@ -91,18 +89,18 @@ Route::group(['middleware' => 'cors'], function ()
     Route::get('municipio','MunicipioController@index');
     //listar municipio por provincia 
     Route::get('municipio/{pro_id}','MunicipioController@municipio_provincia');
-    //listar todas las personas
-     Route::get('persona','PersonaController@index');
     //listar zona por municipio
     Route::get('zona/{mun_id}', 'ZonaController@index');
     //crear persona
-    Route::resource('persona', 'PersonaController', ['only' => ['store', 'update', 'show']]);
+    Route::resource('persona', 'PersonaController', ['only' => ['store', 'update', 'show','destroy','index']]);
     //listar funcionarios por cargo 
     Route::get('funcionario_cargo/{cargo}', 'FuncionarioController@listaporcargo');
     //crear persona y funcionario
     Route::post('funcionario_persona', 'FuncionarioController@crear_funcionario');
     // operaciones con funcionario, crear funcionario desde una persona existente 
-    Route::resource('funcionario','FuncionarioController',['only' => ['index', 'store', 'update', 'show']]);
+    Route::resource('funcionario','FuncionarioController',['only' => ['index', 'store', 'update', 'show','destroy']]);
+    //editar solo datos del funcionario
+     Route::put('funcio/{fun_id}', 'FuncionarioController@editar_fun');
     //operaciones con firma para crear debe corresponder al cargo
     Route::resource('funcionario/firma','FirmaController',['only' => ['index', 'store', 'update', 'show']]);
 
