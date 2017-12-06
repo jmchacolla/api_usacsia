@@ -65,7 +65,7 @@ Route::group(['middleware' => 'cors'], function ()
     Route::get('tramite','TramiteController@index');
     Route::resource('tramite','TramiteController',['only' => ['store', 'update', 'destroy', 'show']]);
 /*PERSONA_TRAMITE*/
-    Route::resource('pers_tra','Persona_TramiteController',['only' => ['store', 'update', 'destroy', 'show','index']]);
+    Route::resource('pers_tra','Persona_tramiteController',['only' => ['store', 'update', 'destroy', 'show','index']]);
 
 /*PRUEBA MEDICA*/
     Route::resource('prueba_medica','Prueba_MedicaController',['only' => ['store', 'update', 'destroy', 'show','index']]);
