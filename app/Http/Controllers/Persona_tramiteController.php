@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use
 
 use Illuminate\Http\Request;
 use Validator;
@@ -43,9 +44,11 @@ class Persona_tramiteController extends Controller
 		$persona_tramite= new \App\Models\Persona_tramite();
 		$persona_tramite->tra_id=$request->tra_id;
 		$persona_tramite->per_id=$request->per_id;
-		$persona_tramite->pt_numero_tramite = $request->pt_numero_tramite;
+
+		// $persona_tramite->pt_numero_tramite = $request->pt_numero_tramite; //serial
+
 		$persona_tramite->pt_vigencia_pago=$request->pt_vigencia_pago;
-		$persona_tramite->pt_fecha_ini=$request->pt_fecha_ini;
+		$persona_tramite->pt_fecha_ini=Carbon->now();
 		$persona_tramite->pt_fecha_fin=$request->pt_fecha_fin;
 		$persona_tramite->pt_estado_pago=$request->pt_estado_pago;
 		$persona_tramite->pt_estado_tramite=$request->pt_estado_tramite;
