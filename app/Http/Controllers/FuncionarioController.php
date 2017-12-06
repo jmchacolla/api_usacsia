@@ -202,6 +202,21 @@ class FuncionarioController extends Controller
 
          return response()->json(["msg" => "editado exitosamente", "funcionario" => $resultado], 200);
     }
+    public function editar_fun(Request $request, $fun_id)
+
+    {   
+        $funcionario= Funcionario::find($fun_id);
+
+        if (!$funcionario)
+        {
+            return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un funcionario con ese código.'])],404);
+        }
+
+        $input = $request->all();
+        $funcionario->update($input);
+
+        return response()->json(['status'=>'ok',"msg" => "editado exitosamente","funcionario" => $funcionario], 200);
+    }
 
 
 }
