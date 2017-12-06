@@ -121,6 +121,14 @@ class PersonaController extends Controller
         return response()->json(['mensaje'=>'exito','persona'=>$result],200); 
 
     }
+    // busca a un paciente deacuerdo a su numero de carnet devuelve un array
+
+     public function buscar_persona($per_ci)
+    {
+        $persona= Persona::where('per_ci',$per_ci)/*->whereNull('paciente.deleted_at')*/->select('persona.per_id','per_nombres','per_apellido_primero','per_apellido_segundo','per_ci','per_fecha_nacimiento','per_email','per_numero_celular')->get();
+
+        return response()->json(['mensaje'=>'exito','persona'=>$persona],200); 
+    }
 
 
 
