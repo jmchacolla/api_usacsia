@@ -108,8 +108,14 @@ Route::group(['middleware' => 'cors'], function ()
     // index input(fun_id)
     // store input(ser_id, amb_id, fun_id, hor_fecha_inicio, hor_fecha_final)
     Route::resource('horario', 'HorarioController', ['only' =>['index', 'store', 'update', 'show']]);
+
     // permite buscar paciente por el ci
      Route::get('personas_ci/{per_ci}','PersonaController@buscar_persona');
+
+
+    //JHON empresa
+    Route::resource('establecimiento_solicitante','EstablecimientoSolicitanteController', ['only' =>['index', 'store', 'update', 'show']]);
+
     
 });
 
