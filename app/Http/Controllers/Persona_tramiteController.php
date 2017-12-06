@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 use Validator;
 use App\Http\Requests;
+
 
 class Persona_tramiteController extends Controller
 {
