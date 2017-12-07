@@ -218,5 +218,21 @@ class FuncionarioController extends Controller
         return response()->json(['status'=>'ok',"msg" => "editado exitosamente","funcionario" => $funcionario], 200);
     }
 
+    public function ver_funcionario($per_id)
+    {
+
+        $funcionario=Funcionario::where('per_id',$per_id)->first();
+
+        if (!$funcionario)
+        {
+             return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra una persona con ese código.'])],404);
+        }
+
+       
+
+        return response()->json(['status'=>'ok',"msg" => "exito",'funcionario'=>$funcionario],200); 
+    }
+
+
 
 }

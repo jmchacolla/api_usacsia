@@ -39,6 +39,7 @@ Route::group(['middleware' => 'cors'], function ()
     Route::resource('prueba_laboratorio','Prueba_laboratorioController', ['only'=>['index','show','store','update','destroy']]);
     Route::resource('prueba_par','Prueba_parController', ['only'=>['index','show','store','update','destroy']]);
 
+    //buscar persona_tramite
     
     Route::get('buscar_persona_tramite/{per_ci}','Persona_TramiteController@buscar_persona_tramite');
 
@@ -101,6 +102,11 @@ Route::group(['middleware' => 'cors'], function ()
     Route::resource('funcionario','FuncionarioController',['only' => ['index', 'store', 'update', 'show','destroy']]);
     //editar solo datos del funcionario
      Route::put('funcio/{fun_id}', 'FuncionarioController@editar_fun');
+
+    // ver datos del funcionario por el per_id
+    Route::get('funcionarios_per/{per_id}','FuncionarioController@ver_funcionario');
+
+
     //operaciones con firma para crear debe corresponder al cargo
     Route::resource('funcionario/firma','FirmaController',['only' => ['index', 'store', 'update', 'show']]);
 
