@@ -7,6 +7,9 @@ use Validator;
 use App\Http\Requests;
 use \App\Models\Ambiente;
 use \App\Models\Laboratorio;
+use \App\Models\Funcionario;
+use \App\Models\Persona;
+
 
 class LaboratorioController extends Controller
 {
@@ -117,25 +120,25 @@ class LaboratorioController extends Controller
 
      public function show($amb_id)
     {
-        $ambientes= \App\Models\Ambiente::find($amb_id);
+        $ambientes= Ambiente::find($amb_id);
         if (!$ambientes)
         {
 
             return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra el ambiente consultorio con ese código.'])],404);
         }
         
-       $laboratorios= \App\Models\Laboratorio::where('amb_id',$amb_id)->get()->first();
+       $laboratorios= Laboratorio::where('amb_id',$amb_id)->get()->first();
        if (!$laboratorios)
         {
             return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un laboratorio en el ambiente'])],404);
         }
         $fun_id=$laboratorios->fun_id;
 
-        $funcionario=\App\Models\Funcionario::find($fun_id);
+        $funcionario=Funcionario::find($fun_id);
 
         $per_id=$funcionario->per_id;
 
-        $persona=\App\Models\Persona::find($per_id);
+        $persona=Persona::find($per_id);
             //$establecimientos=$establecimientos->toArray();
 
         $resultado=compact('ambientes','laboratorios','funcionario','persona');
