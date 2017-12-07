@@ -44,6 +44,8 @@ Route::group(['middleware' => 'cors'], function ()
     Route::get('buscar_persona_tramite/{per_ci}','Persona_tramiteController@buscar_persona_tramite');
 
     Route::get('tramites_x_tipo_tramite/{tra_id}','Persona_tramiteController@listar_x_tipo_tramite');
+    // jhon------------------------------
+    Route::get('fichasfecha','FichaController@fichasfecha');
 
 
 
@@ -121,6 +123,8 @@ Route::group(['middleware' => 'cors'], function ()
 
     //JHON empresa
     Route::resource('establecimiento_solicitante','EstablecimientoSolicitanteController', ['only' =>['index', 'store', 'update', 'show']]);
+    //jhon fichas
+    Route::resource('ficha', 'FichaController',['only' =>['index', 'store', 'update', 'show']]);
 
     
 });

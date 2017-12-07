@@ -36,7 +36,7 @@ class Persona_tramiteController extends Controller
         {
             return $validator->errors()->all();
 
-		}  */
+		}  
 		$persona_tramite= new Persona_tramite();
 
 		$persona_tramite->tra_id=$request->tra_id;
