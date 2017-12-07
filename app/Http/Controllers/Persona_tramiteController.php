@@ -7,6 +7,7 @@ use Validator;
 use App\Http\Requests;
 use App\Models\Persona_Tramite;
 use App\Models\Muestra;
+use Carbon\Carbon;
 
 class Persona_tramiteController extends Controller
 {
@@ -29,18 +30,18 @@ class Persona_tramiteController extends Controller
 
     public function store(Request $request)
     {
-		$validator = Validator::make($request->all(), [
+		// $validator = Validator::make($request->all(), [
             
-            'tra_id' => 'required',
-            'per_id' => 'required'
-        ]);
+  //           'tra_id' => 'required',
+  //           'per_id' => 'required'
+  //       ]);
 
-        if ($validator->fails()) 
-        {
-            return $validator->errors()->all();
-		}  
+  //       if ($validator->fails()) 
+  //       {
+  //           return $validator->errors()->all();
+		// }  
         
-		$persona_tramite= new \App\Models\Persona_Tramite();
+		$persona_tramite= new Persona_Tramite();
 		$persona_tramite->tra_id=$request->tra_id;
 		$persona_tramite->per_id=$request->per_id;
 		$persona_tramite->pt_numero_tramite = $request->pt_numero_tramite;
@@ -51,9 +52,7 @@ class Persona_tramiteController extends Controller
 		$persona_tramite->pt_estado_tramite=$request->pt_estado_tramite;
 		$persona_tramite->pt_monto=$request->pt_monto;
 		$persona_tramite->pt_tipo_tramite=$request->pt_tipo_tramite;
-
 		$persona_tramite->save();
-
    		return response()->json(['status'=>'ok',"mensaje"=>"creado exitosamente","persona_tramite"=>$persona_tramite], 200);
 
     }
