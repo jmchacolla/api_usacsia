@@ -9,7 +9,7 @@ use App\Models\Persona_Tramite;
 use App\Models\Muestra;
 
 
-class Persona_TramiteController extends Controller
+class Persona_tramiteController extends Controller
 {
     public function listar_x_tipo_tramite($tra_id)
     {
@@ -127,6 +127,11 @@ class Persona_TramiteController extends Controller
         $ultima_muestra=Muestra::select('mue_num_muestra','muestra.created_at')
         // ->where('muestra.created_at'->date('Y-m-d'), $hoy)
         ->get();
+
+        foreach ($muestra as $ultima_muestra) {
+            # code...
+            $muestra->created_at ;
+        }
 
         $persona_tramite = Persona_Tramite::select('per_nombres','per_apellido_primero', 'per_apellido_segundo', 'per_ci', 'mue_num_muestra')
         ->join('persona', 'persona.per_id','=', 'persona_tramite.per_id')
