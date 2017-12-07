@@ -39,6 +39,14 @@ Route::group(['middleware' => 'cors'], function ()
     Route::resource('prueba_laboratorio','Prueba_laboratorioController', ['only'=>['index','show','store','update','destroy']]);
     Route::resource('prueba_par','Prueba_parController', ['only'=>['index','show','store','update','destroy']]);
 
+    
+    Route::get('buscar_persona_tramite/{per_ci}','Persona_TramiteController@buscar_persona_tramite');
+
+    Route::get('tramites_x_tipo_tramite/{tra_id}','Persona_TramiteController@listar_x_tipo_tramite');
+
+
+
+
     /*wen*/
     Route::get('ambiente','AmbienteController@index');
     Route::post('ambiente','AmbienteController@store');
@@ -58,7 +66,7 @@ Route::group(['middleware' => 'cors'], function ()
     Route::resource('tramite','TramiteController',['only' => ['store', 'update', 'destroy', 'show']]);
 /*PERSONA_TRAMITE*/
     Route::resource('pers_tra','Persona_TramiteController',['only' => ['store', 'update', 'destroy', 'show','index']]);
-    Route::get('tramites_x_tipo_tramite/{tra_id}','Persona_TramiteController@listar_x_tipo_tramite');
+
 /*PRUEBA MEDICA*/
     Route::resource('prueba_medica','Prueba_MedicaController',['only' => ['store', 'update', 'destroy', 'show','index']]);
 /*PRUEBA ENFERMEDAD*/

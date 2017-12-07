@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Http\Requests;
+use App\Models\Persona_Tramite;
 
-class Persona_tramiteController extends Controller
+
+class Persona_TramiteController extends Controller
 {
     public function listar_x_tipo_tramite($tra_id)
     {
@@ -37,7 +39,7 @@ class Persona_tramiteController extends Controller
         {
             return $validator->errors()->all();
 		}  */
-		$persona_tramite= new \App\Models\Persona_Tramite();
+		$persona_tramite= new \App\Models\Persona_tramite();
 		$persona_tramite->tra_id=$request->tra_id;
 		$persona_tramite->per_id=$request->per_id;
 		$persona_tramite->pt_numero_tramite = $request->pt_numero_tramite;
@@ -116,6 +118,21 @@ class Persona_tramiteController extends Controller
             "mensaje" => "eliminado Persona tramite"
             ], 200
         );
+    }
+
+     public function buscar_persona_tramite($per_ci)
+    {
+        $persona_tramite = Persona_Tramite::select('per_nombres','per_apellido_primero', 'per_apellido_segundo', 'per_ci', 'mue_num_muestra')
+        ->join('persona', 'persona.per_id','=', 'persona_tramite.per_id')
+        ->join('muestra', 'muestra.pt_id',"=", 'persona_tramite.pt_id')
+        ->where('persona.per_ci', $per_ci)
+        ->get();
+
+        if (!$persona_tramite->first())
+        {    
+            return response()->json(["mensaje"=>"no se encuentra una persona_tramite con ese codigo"]);
+        }
+         return response()->json(['status'=>'ok','mensaje'=>'exito',"persona_tramite"=>$persona_tramite], 200);
     }
 
 }

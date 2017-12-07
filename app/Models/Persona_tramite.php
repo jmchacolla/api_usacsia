@@ -28,7 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property PruebaMedica[] $pruebaMedicas
  * @property PruebaLaboratorio[] $pruebaLaboratorios
  */
-class Persona_tramite extends Model
+class Persona_Tramite extends Model
 {
     /**
      * The table associated with the model.
