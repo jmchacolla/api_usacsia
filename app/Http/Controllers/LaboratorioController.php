@@ -66,7 +66,7 @@ class LaboratorioController extends Controller
 
          //creando laboratorio
 
-        $laboratorios = Laboratorio();
+        $laboratorios = new Laboratorio();
         $laboratorios->amb_id=$ambientes->amb_id;
         $laboratorios->fun_id=$request->fun_id;
         $laboratorios->lab_cod=$request->lab_cod;
