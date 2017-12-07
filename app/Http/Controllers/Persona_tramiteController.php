@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Http\Requests;
 use App\Models\Persona_Tramite;
+use App\Models\Muestra;
 
 
 class Persona_TramiteController extends Controller
