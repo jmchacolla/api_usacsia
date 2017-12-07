@@ -16,7 +16,7 @@ class Persona_tramiteController extends Controller
             1: lista de tramites de carnet sanitario
             2: lista de tramites de certificado sanitario
         */
-        $pers_tramite=Persona_Tramite::select('tramite.tra_nombre', 'persona.per_id','persona.per_ci','persona.per_nombres','persona.per_apellido_primero','persona.per_apellido_segundo','persona.per_fecha_nacimiento', 'persona.per_genero','persona.per_ocupacion','pt_tipo_tramite')
+        $pers_tramite=Persona_Tramite::select('tramite.tra_nombre','pt_numero_tramite', 'persona.per_id','persona.per_ci','persona.per_nombres','persona.per_apellido_primero','persona.per_apellido_segundo','persona.per_fecha_nacimiento', 'persona.per_genero','persona.per_ocupacion','pt_tipo_tramite')
         ->join('tramite','tramite.tra_id','=','persona_tramite.tra_id')
         ->join('persona', 'persona.per_id', '=', 'persona_tramite.per_id')
         ->where('persona_tramite.tra_id', $tra_id)
@@ -29,7 +29,7 @@ class Persona_tramiteController extends Controller
 
     public function store(Request $request)
     {
-		/*$validator = Validator::make($request->all(), [
+		$validator = Validator::make($request->all(), [
             
             'tra_id' => 'required',
             'per_id' => 'required'
@@ -38,7 +38,8 @@ class Persona_tramiteController extends Controller
         if ($validator->fails()) 
         {
             return $validator->errors()->all();
-		}  */
+		}  
+        
 		$persona_tramite= new \App\Models\Persona_Tramite();
 		$persona_tramite->tra_id=$request->tra_id;
 		$persona_tramite->per_id=$request->per_id;
