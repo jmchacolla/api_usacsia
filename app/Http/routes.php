@@ -40,9 +40,9 @@ Route::group(['middleware' => 'cors'], function ()
     Route::resource('prueba_par','Prueba_parController', ['only'=>['index','show','store','update','destroy']]);
 
     
-    Route::get('buscar_persona_tramite/{per_ci}','Persona_TramiteController@buscar_persona_tramite');
+    Route::get('buscar_persona_tramite/{per_ci}','Persona_tramiteController@buscar_persona_tramite');
 
-    Route::get('tramites_x_tipo_tramite/{tra_id}','Persona_TramiteController@listar_x_tipo_tramite');
+    Route::get('tramites_x_tipo_tramite/{tra_id}','Persona_tramiteController@listar_x_tipo_tramite');
 
 
 

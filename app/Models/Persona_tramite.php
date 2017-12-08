@@ -28,7 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property PruebaMedica[] $pruebaMedicas
  * @property PruebaLaboratorio[] $pruebaLaboratorios
  */
-class Persona_Tramite extends Model
+class Persona_tramite extends Model
 {
     /**
      * The table associated with the model.
@@ -47,9 +47,9 @@ class Persona_Tramite extends Model
     /**
      * @var array
      */
-    protected $fillable = ['tra_id', 'per_id', 'pt_numero_tramite', 'pt_vigencia_pago', 'pt_fecha_ini', 'pt_fecha_fin', 'pt_estado_pago', 'pt_estado_tramite', 'pt_monto', 'pt_tipo_tramite', 'created_at', 'updated_at', 'deleted_at', 'userid_at'];
-        protected $dates = ['pt_vigencia_pago', 'pt_fecha_ini', 'pt_fecha_fin','pt_estado_tramite', 'created_at', 'updated_at', 'deleted_at'];
-
+    protected $fillable = ['tra_id', 'per_id', 'pt_numero_tramite', 'pt_vigencia_pago', 'pt_fecha_ini', 'pt_fecha_fin', 'pt_estado_pago', 'pt_estado_tramite', 'pt_monto', 'pt_tipo_tramite'];
+    protected $hidden = ['created_at','updated_at','userid_at','deleted_at'];
+    protected $dates=['deleted_at'];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
