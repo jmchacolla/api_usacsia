@@ -46,6 +46,7 @@ Route::group(['middleware' => 'cors'], function ()
     Route::get('tramites_x_tipo_tramite/{tra_id}','Persona_tramiteController@listar_x_tipo_tramite');
     // jhon------------------------------
     Route::get('fichasfecha','FichaController@fichasfecha');
+    // Route::get('personatramite/{pt_id}', 'Persona_tramiteController@personadetramite');
 
 
 
@@ -72,7 +73,7 @@ Route::group(['middleware' => 'cors'], function ()
     Route::resource('prueba_medica','Prueba_MedicaController',['only' => ['store', 'update', 'destroy', 'show','index']]);
 /*PRUEBA ENFERMEDAD*/
     Route::resource('prueba_enfermedad','Prueba_EnfermedadController',['only' => ['store', 'update', 'destroy', 'show','index']]);
-    Route::get('consulta/{pm_id}','Prueba_MedicaController@listar_enfermedades_prueba');
+    Route::get('consulta/{pm_id}','Prueba_medicaController@listar_enfermedades_prueba');
     Route::post('consulta','Prueba_EnfermedadController@crear_prueba_medica_enfermedad');
 /*CARIES*/
     Route::resource('caries','CariesController',['only' => ['store', 'update', 'destroy', 'show','index']]);
