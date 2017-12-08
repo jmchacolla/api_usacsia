@@ -29,7 +29,7 @@ class Persona_tramiteController extends Controller
 
     public function store(Request $request)
     {
-		/*$validator = Validator::make($request->all(), [
+		$validator = Validator::make($request->all(), [
             
             'tra_id' => 'required',
             'per_id' => 'required'
@@ -38,8 +38,14 @@ class Persona_tramiteController extends Controller
         if ($validator->fails()) 
         {
             return $validator->errors()->all();
+<<<<<<< HEAD
 		}  */
 		$persona_tramite= new Persona_tramite();
+=======
+		}  
+        
+		$persona_tramite= new \App\Models\Persona_Tramite();
+>>>>>>> a894053d77b347b1b8cbe9850fb33716456c92af
 		$persona_tramite->tra_id=$request->tra_id;
 		$persona_tramite->per_id=$request->per_id;
 		$persona_tramite->pt_numero_tramite = $request->pt_numero_tramite;
