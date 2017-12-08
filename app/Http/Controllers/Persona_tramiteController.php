@@ -21,9 +21,6 @@ class Persona_tramiteController extends Controller
         ->join('persona', 'persona.per_id', '=', 'persona_tramite.per_id')
         ->where('persona_tramite.tra_id', $tra_id)
         ->get();
-
-
-
         return response()->json(['status'=>'ok','mensaje'=>'exito','persona_tramite'=>$pers_tramite],200);
     }
 
@@ -38,14 +35,10 @@ class Persona_tramiteController extends Controller
         if ($validator->fails()) 
         {
             return $validator->errors()->all();
-<<<<<<< HEAD
+
 		}  */
 		$persona_tramite= new Persona_tramite();
-=======
-		}  
-        
-		$persona_tramite= new \App\Models\Persona_Tramite();
->>>>>>> a894053d77b347b1b8cbe9850fb33716456c92af
+
 		$persona_tramite->tra_id=$request->tra_id;
 		$persona_tramite->per_id=$request->per_id;
 		$persona_tramite->pt_numero_tramite = $request->pt_numero_tramite;
