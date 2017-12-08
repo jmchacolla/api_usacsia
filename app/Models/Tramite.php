@@ -42,7 +42,7 @@ class Tramite extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function personaTramites()
+    public function Persona_tramite()
     {
         return $this->hasMany('App\PersonaTramite', 'tra_id', 'tra_id');
     }
