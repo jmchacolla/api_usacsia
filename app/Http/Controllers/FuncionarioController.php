@@ -151,48 +151,72 @@ class FuncionarioController extends Controller
         return response()->json(['status'=>'ok',"msg" => "exito",'funcionario'=>$resultado],200); 
     }
 
-        public function update(Request $request)
+       // editar funcionario cuando la persona no existe
+    public function update(Request $request, $fun_id)
+    {
+        
+        $funcionario= Funcionario::find($fun_id);
+
+        if (!$funcionario)
         {
-            //crear persona
-            $fun_id=$request->fun_id;
-            $persona = new Persona();
-            $persona->zon_id=$request->zon_id;
-            $persona->per_ci=$request->per_ci;
-            $persona->per_tipo_documento= $request->per_tipo_documento;
-            $persona->per_pais= $request->per_pais;
-            $persona->per_ci_expedido = $request->per_ci_expedido;
-            $persona->per_nombres= Str::upper($request->per_nombres);
-            $persona->per_apellido_primero= Str::upper($request->per_apellido_primero);
-            $persona->per_apellido_segundo= Str::upper($request->per_apellido_segundo);
-            $persona->per_fecha_nacimiento= $request->per_fecha_nacimiento;
-            $persona->per_genero= $request->per_genero;
-            $persona->per_email= $request->per_email;
-            $persona->per_numero_celular= $request->per_numero_celular;
-            $persona->per_clave_publica= $request->per_clave_publica;
-            $persona->per_avenida_calle=$request->per_avenida_calle;
-            $persona->per_numero=$request->per_numero;
-            $persona->per_ocupacion=$request->per_ocupacion;
-            $persona->userid_at='2';
-            $persona->save();
-
-            //creando imagen de persona
-            $imagen = new Imagen();
-            $imagen->per_id=$persona->per_id;
-            $imagen->ima_nombre=$request->ima_nombre;
-            $imagen->ima_enlace=$request->ima_enlace;
-            $imagen->ima_tipo=$request->ima_tipo;
-            $imagen->save();
-            
-            //creando funcionario
-            $funcionario = new Funcionario();
-            $funcionario->per_id=$persona->per_id;
-            $funcionario->fun_profesion=Str::upper($request->fun_profesion);
-            $funcionario->fun_cargo=Str::upper($request->fun_cargo);
-            $funcionario->save();
-            $resultado=compact('persona', 'imagen','funcionario');
-
-             return response()->json(["msg" => "exito", "funcionario" => $resultado], 200);
+            return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un ambiente con ese código.'])],404);
         }
+ 
+        $funcionario->fun_profesion=Str::upper($request->fun_profesion);
+        $funcionario->fun_cargo=Str::upper($request->fun_cargo);
+        $funcionario->fun_estado=Str::upper($request->fun_estado);
+        $funcionario->save();
+
+        $per_id=$funcionario->per_id;
+
+        $persona = Persona::where('per_id', $per_id)->get()->first();
+ 
+        $persona->zon_id=$request->zon_id;
+        $persona->per_ci=$request->per_ci;
+        $persona->per_tipo_documento= $request->per_tipo_documento;
+        $persona->per_pais= $request->per_pais;
+        $persona->per_ci_expedido = $request->per_ci_expedido;
+        $persona->per_nombres= Str::upper($request->per_nombres);
+        $persona->per_apellido_primero= Str::upper($request->per_apellido_primero);
+        $persona->per_apellido_segundo= Str::upper($request->per_apellido_segundo);
+        $persona->per_fecha_nacimiento= $request->per_fecha_nacimiento;
+        $persona->per_genero= $request->per_genero;
+        $persona->per_email= $request->per_email;
+        $persona->per_numero_celular= $request->per_numero_celular;
+        $persona->per_clave_publica= $request->per_clave_publica;
+        $persona->per_avenida_calle=Str::upper($request->per_avenida_calle);
+        $persona->per_numero=$request->per_numero;
+        $persona->per_ocupacion=Str::upper($request->per_ocupacion);
+        $persona->userid_at='2';
+        $persona->save();
+
+        $imagen = Imagen::where('per_id', $per_id)->get()->first();
+    
+        $imagen->ima_nombre=$request->ima_nombre;
+        $imagen->ima_enlace=$request->ima_enlace;
+        $imagen->ima_tipo=$request->ima_tipo;
+        $imagen->save();
+        
+       
+        $resultado=compact('persona', 'imagen','funcionario');
+
+         return response()->json(["msg" => "editado exitosamente", "funcionario" => $resultado], 200);
+    }
+    public function editar_fun(Request $request, $fun_id)
+
+    {   
+        $funcionario= Funcionario::find($fun_id);
+
+        if (!$funcionario)
+        {
+            return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un funcionario con ese código.'])],404);
+        }
+
+        $input = $request->all();
+        $funcionario->update($input);
+
+        return response()->json(['status'=>'ok',"msg" => "editado exitosamente","funcionario" => $funcionario], 200);
+    }
 
 
 }
