@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Http\Requests;
 use App\Models\Persona_Tramite;
+use App\Models\Muestra;
 
 
-class Persona_TramiteController extends Controller
+
+class Persona_tramiteController extends Controller
 {
     public function listar_x_tipo_tramite($tra_id)
     {
@@ -122,17 +124,27 @@ class Persona_TramiteController extends Controller
 
      public function buscar_persona_tramite($per_ci)
     {
-        $persona_tramite = Persona_Tramite::select('per_nombres','per_apellido_primero', 'per_apellido_segundo', 'per_ci', 'mue_num_muestra')
+        $hoy=date('Y-m-d');
+        $ultima_muestra=Muestra::select('muestra.mue_num_muestra')
+        ->where('muestra.mue_fecha', $hoy)
+        ->max('muestra.mue_num_muestra');
+
+        $numero_muestra=$ultima_muestra+1;
+        if(!$ultima_muestra)
+        {
+            $numero_muestra=1;
+        } 
+
+        $persona_tramite = Persona_Tramite::select('per_nombres','per_apellido_primero', 'per_apellido_segundo', 'per_ci', 'per_ci_expedido','mue_num_muestra')
         ->join('persona', 'persona.per_id','=', 'persona_tramite.per_id')
         ->join('muestra', 'muestra.pt_id',"=", 'persona_tramite.pt_id')
         ->where('persona.per_ci', $per_ci)
-        ->get();
-
+        ->get()->first();
         if (!$persona_tramite->first())
         {    
             return response()->json(["mensaje"=>"no se encuentra una persona_tramite con ese codigo"]);
-        }
-         return response()->json(['status'=>'ok','mensaje'=>'exito',"persona_tramite"=>$persona_tramite], 200);
+        } 
+         return response()->json(['status'=>'ok','mensaje'=>'exito',"persona_tramite"=>$persona_tramite, "numero_muestra"=>$numero_muestra], 200);
     }
 
 }
