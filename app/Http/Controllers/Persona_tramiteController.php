@@ -142,7 +142,9 @@ class Persona_tramiteController extends Controller
         {    
             return response()->json(["mensaje"=>"no se encuentra una persona_tramite con ese codigo"]);
         } 
-         return response()->json(['status'=>'ok','mensaje'=>'exito',"persona_tramite"=>$persona_tramite, "numero_muestra"=>$numero_muestra], 200);
+
+        $res=compact('numero_muestra','persona_tramite');
+         return response()->json(['status'=>'ok','mensaje'=>'exito',"res"=>$res], 200);
     }
 
 }
