@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Models\Persona_Tramite;
 use App\Models\Muestra;
 
-class Persona_tramiteController extends Controllers
+class Persona_tramiteController extends Controller
 {
     public function listar_x_tipo_tramite($tra_id)
     {
