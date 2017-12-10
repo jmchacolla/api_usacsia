@@ -130,6 +130,26 @@ class PersonaController extends Controller
         return response()->json(['mensaje'=>'exito','persona'=>$persona],200); 
     }
 
+        //eliminar persona
+    public function destroy($per_id)
+        {
+            $persona = Persona::find($per_id);
+
+            if (!$persona)
+            {    
+                return response()->json(["mensaje"=>"no se encuentra una persona con ese codigo"]);
+             }
+
+            $persona->delete();
+
+            return response()->json([
+
+                "mensaje" => "eliminado persona"
+                ], 200
+            );
+        }
+ 
+
 
 
 
