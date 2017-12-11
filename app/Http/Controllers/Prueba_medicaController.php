@@ -7,6 +7,12 @@ use Validator;
 use App\Http\Requests;
 
 use App\Models\Prueba_medica;
+use App\Models\Persona_tramite;
+use App\Models\Servicio;
+use App\Models\Prueba_enfermedad;
+use App\Models\Funcionario;
+use App\Models\Persona;
+use App\Models\Enfermedad;
 
 class Prueba_medicaController extends Controller
 {
@@ -31,17 +37,20 @@ class Prueba_medicaController extends Controller
 		}  
 		$prueba_medica= new Prueba_medica();
 		$prueba_medica->pt_id=$request->pt_id;
-		$prueba_medica->ser_id=1;//-----------------------medicina general
-		$prueba_medica->fun_id = 2;//-----------------------debe cachearse de sesion
+		$prueba_medica->ser_id=$request->ser_id;//-----------------------medicina general
+		$prueba_medica->fun_id = $request->fun_id;//-----------------------debe cachearse de sesion
 		$prueba_medica->pm_fr=$request->pm_fr;
 		$prueba_medica->pm_fc=$request->pm_fc;
+        $prueba_medica->pm_pa_sistolica=$request->pm_pa_sistolica;
+        $prueba_medica->pm_pa_diastolica=$request->pm_pa_diastolica;
 		$prueba_medica->pm_peso=$request->pm_peso;
 		$prueba_medica->pm_talla=$request->pm_talla;
 		$prueba_medica->pm_imc=$request->pm_imc;
-		// $prueba_medica->pm_diagnostico=$request->pm_diagnostico;//---se edita al finalizar las pruebas
+        $prueba_medica->pm_temperatura=$request->pm_temperatura;
+		// $prueba_medica->pm_diagnostico="";//---se edita al finalizar las pruebas
 		$prueba_medica->pm_estado='PENDIENTE';
-		$prueba_medica->pm_fecha=$request->pm_fecha;
-		$prueba_medica->userid_at='2';
+		// $prueba_medica->pm_fecha=$request->pm_fecha;
+		$prueba_medica->userid_at=2;
 		$prueba_medica->save();
 
 		return response()->json(['status'=>'ok',"mensaje"=>"creado exitosamente","prueba_medica"=>$prueba_medica], 200);
@@ -61,9 +70,13 @@ class Prueba_medicaController extends Controller
 		$prueba_medica->fun_id = $request->fun_id;
 		$prueba_medica->pm_fr=$request->pm_fr;
 		$prueba_medica->pm_fc=$request->pm_fc;
+        $prueba_medica->pm_pa_sistolica=$request->pm_pa_sistolica;
+        $prueba_medica->pm_pa_diastolica=$request->pm_pa_diastolica;
+        $prueba_medica->pm_peso=$request->pm_peso;
 		$prueba_medica->pm_peso=$request->pm_peso;
 		$prueba_medica->pm_talla=$request->pm_talla;
 		$prueba_medica->pm_imc=$request->pm_imc;
+        $prueba_medica->pm_temperatura=$request->pm_temperatura;
 		$prueba_medica->pm_diagnostico=$request->pm_diagnostico;
 		$prueba_medica->pm_tipo=$request->pm_tipo;
 		$prueba_medica->pm_estado=$request->pm_estado;
@@ -86,20 +99,20 @@ class Prueba_medicaController extends Controller
         $ser_id=$prueba_medica->ser_id;
         $fun_id=$prueba_medica->fun_id;
 
-        $persona_tra=Persona_Tramite::find($pt_id);
+        $persona_tra=Persona_tramite::find($pt_id);
         $per_id=$persona_tra->per_id;
 
         $servicio=Servicio::find($ser_id);
-        $prueba_enfermedad=Prueba_Enfermedad::where('prueba_enfermedad.pm_id',$pm_id)->get();
+        $prueba_enfermedad=Prueba_enfermedad::where('prueba_enfermedad.pm_id',$pm_id)->get();
 
         //$func=Funcionario::find($fun_id);
 //saca los datos del funcionario
          $funcionario=Funcionario::select('funcionario.fun_id','fun_cargo','persona.per_id','per_ci','per_ci_expedido','per_nombres','per_apellido_primero','per_apellido_segundo','per_fecha_nacimiento','per_genero','per_numero_celular','per_tipo_documento','per_pais')
-         ->join('persona','persona.per_id','=','funcionario.per_id')->where('funcionario.fun_id','=',$fun_id)->get();
+         ->join('persona','persona.per_id','=','funcionario.per_id')->where('funcionario.fun_id','=',$fun_id)->first();
 
          //saca los datos del paciente
-         $paciente=Persona::select('persona.per_id','per_ci','per_ci_expedido','per_nombres','per_apellido_primero','per_apellido_segundo','per_fecha_nacimiento','per_genero','per_numero_celular','per_tipo_documento','per_pais')
-        ->where('persona.per_id','=',$per_id)->get();
+         $paciente=Persona::select('persona.per_id','per_ci','per_ci_expedido','per_nombres','per_apellido_primero','per_apellido_segundo','per_fecha_nacimiento','per_genero','per_numero_celular','per_tipo_documento','per_pais', 'per_ocupacion')
+        ->where('persona.per_id','=',$per_id)->first();
         
         //saca los datos de enfermedad
         $enfermedad=Enfermedad::select('enfermedad.enfe_id','enfe_nombre','enfe_causas')

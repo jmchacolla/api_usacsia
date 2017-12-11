@@ -46,7 +46,7 @@ class Prueba_medica extends Model
     /**
      * @var array
      */
-    protected $fillable = ['pt_id', 'ser_id', 'fun_id', 'pm_fr', 'pm_fc', 'pm_peso', 'pm_talla', 'pm_imc', 'pm_diagnostico', 'pm_estado', 'pm_fecha'];
+    protected $fillable = ['pt_id', 'ser_id', 'fun_id', 'pm_fr', 'pm_pa_sistolica', 'pm_pa_diastolica', 'pm_fc', 'pm_peso', 'pm_talla', 'pm_imc', 'pm_diagnostico', 'pm_temperatura', 'pm_estado', 'pm_fecha'];
     protected $hidden = ['created_at','updated_at','userid_at','deleted_at'];
     protected $dates=['deleted_at'];
 

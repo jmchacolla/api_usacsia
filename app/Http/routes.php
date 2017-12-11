@@ -79,9 +79,10 @@ Route::group(['middleware' => 'cors'], function ()
     Route::resource('pers_tra','Persona_tramiteController',['only' => ['store', 'update', 'destroy', 'show','index']]);
 
 /*PRUEBA MEDICA*/
-    Route::resource('prueba_medica','Prueba_MedicaController',['only' => ['store', 'update', 'destroy', 'show','index']]);
+    Route::resource('prueba_medica','Prueba_medicaController',['only' => ['store', 'update', 'destroy', 'show','index']]);
 /*PRUEBA ENFERMEDAD*/
     Route::resource('prueba_enfermedad','Prueba_EnfermedadController',['only' => ['store', 'update', 'destroy', 'show','index']]);
+/*    */
     Route::get('consulta/{pm_id}','Prueba_medicaController@listar_enfermedades_prueba');
     Route::post('consulta','Prueba_EnfermedadController@crear_prueba_medica_enfermedad');
 /*CARIES*/
