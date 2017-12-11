@@ -42,4 +42,14 @@ class ParasitoController extends Controller
 
 	    return response()->json(['status'=>'ok','mensaje'=>'exito','parasito'=>$parasito],200);
     }
+
+        public function destroy($par_id){
+        $parasito = Parasito::find($par_id);
+        if (!$parasito)
+        {
+            return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuenta un parásito con ese código.'])],404);
+        }
+        $parasito->delete();
+        return response()->json(['mensaje'=>'registro eliminado correctamente'], 200);
+    }
 }

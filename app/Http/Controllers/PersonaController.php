@@ -125,7 +125,7 @@ class PersonaController extends Controller
 
      public function buscar_persona($per_ci)
     {
-        $persona= Persona::where('per_ci',$per_ci)/*->whereNull('paciente.deleted_at')*/->select('persona.per_id','per_nombres','per_apellido_primero','per_apellido_segundo','per_ci','per_fecha_nacimiento','per_email','per_numero_celular')->get()->first();
+        $persona= Persona::where('per_ci',$per_ci)/*->whereNull('paciente.deleted_at')*/->select('persona.per_id','per_nombres','per_apellido_primero','per_apellido_segundo','per_ci','per_ci_expedido','per_fecha_nacimiento','per_email','per_numero_celular')->get()->first();
 
         return response()->json(['mensaje'=>'exito','persona'=>$persona],200); 
     }

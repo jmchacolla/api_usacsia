@@ -30,7 +30,16 @@ Route::group(['middleware' => 'cors'], function ()
 
     Route::resource('tratamiento','TratamientoController', ['only'=>['index','show','store','update','destroy']]);
     Route::post('enfermedad_tratamiento','Enfermedad_tratamientoController@store');
-    Route::post('parasito_tratamiento','Parasito_tratamientoController@store');
+    
+
+    /*vero*/
+    Route::resource('parasito_tratamiento','Parasito_tratamientoController',['only'=>['store','destroy']]);
+    //tratamientos que no estan asignados a un parasito
+    Route::get('tratamiento2/{par_id}','Parasito_tratamientoController@sin_asignar');
+    Route::resource('muestra','MuestraController', ['only'=>['store','index']]);
+    /*vero*/
+
+
     Route::resource('parasito','ParasitoController',['only'=>['index','show','store','update']]);
     Route::resource('ficha','FichaController', ['only'=>['index','show','store','update','destroy']]);
 
