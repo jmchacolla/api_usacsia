@@ -28,3 +28,5 @@ class MuestraController extends Controller
         ->get();
         return response()->json(['status'=>'ok',"msg" => "exito",'muestra'=>$muestra],200); 
     }
+
+}

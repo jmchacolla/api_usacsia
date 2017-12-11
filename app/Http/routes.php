@@ -40,7 +40,7 @@ Route::group(['middleware' => 'cors'], function ()
     /*vero*/
 
 
-    Route::resource('parasito','ParasitoController',['only'=>['index','show','store','update']]);
+    Route::resource('parasito','ParasitoController',['only'=>['index','show','store','update','destroy']]);
     Route::resource('ficha','FichaController', ['only'=>['index','show','store','update','destroy']]);
 
     Route::resource('trat_de_parasitos_en_la_prueba','Prueba_par_tratController', ['only'=>['index','show','store','update','destroy']]);
