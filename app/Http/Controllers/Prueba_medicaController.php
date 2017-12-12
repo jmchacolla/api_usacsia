@@ -95,7 +95,7 @@ class Prueba_medicaController extends Controller
 		$prueba_medica->pm_imc=$request->pm_imc;
         $prueba_medica->pm_temperatura=$request->pm_temperatura;
 		$prueba_medica->pm_diagnostico=$request->pm_diagnostico;
-		$prueba_medica->pm_tipo=$request->pm_tipo;
+
 		$prueba_medica->pm_estado=$request->pm_estado;
 		$prueba_medica->pm_fecha=$request->pm_fecha;
 		/*$prueba_medica->userid_at='2';*/
@@ -190,7 +190,11 @@ class Prueba_medicaController extends Controller
        
         return response()->json(['status'=>'ok','mensaje'=>'exito','laborato'=>$pruebas],200); 
     }
-
+    public function returnestado($pm_id)
+    {
+        $estadoprueebas=Prueba_enfermedad::where('prueba_enfermedad.pm_id',$pm_id);
+        $estado=false;
+    }
    
 
 }
