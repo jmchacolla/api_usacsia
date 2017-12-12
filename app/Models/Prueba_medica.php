@@ -81,8 +81,8 @@ class Prueba_medica extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function pruebaEnfermedads()
+    public function prueba_enfermedad()
     {
-        return $this->hasMany('App\PruebaEnfermedad', 'pm_id', 'pm_id');
+        return $this->hasMany('App\prueba_enfermedad', 'pm_id', 'pm_id');
     }
 }

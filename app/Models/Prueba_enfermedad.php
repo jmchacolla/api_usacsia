@@ -43,9 +43,9 @@ class Prueba_enfermedad extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function pruebaMedica()
+    public function Prueba_medica()
     {
-        return $this->belongsTo('App\PruebaMedica', 'pm_id', 'pm_id');
+        return $this->belongsTo('App\Prueba_medica', 'pm_id', 'pm_id');
     }
 
     /**
