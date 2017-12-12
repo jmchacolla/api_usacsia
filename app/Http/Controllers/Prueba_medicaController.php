@@ -52,7 +52,7 @@ class Prueba_medicaController extends Controller
 		// $prueba_medica->pm_fecha=$request->pm_fecha;
 		$prueba_medica->userid_at=2;
 		$prueba_medica->save();
-/*        $pm_id=$prueba_medica->pm_id;
+        $pm_id=$prueba_medica->pm_id;
 
         $enfermedades= Enfermedad::all();
         if (!$enfermedades) {
@@ -69,8 +69,8 @@ class Prueba_medicaController extends Controller
         $pruebas=Prueba_enfermedad::where('prueba_enfermedad.pm_id',$pm_id)->get();
         // $prmed=Prueba_medica::find($pm_id);
         $resultado=compact('prueba_medica', 'pruebas');
-*/
-		return response()->json(['status'=>'ok',"mensaje"=>"creado exitosamente","prueba_medica"=>$prueba_medica], 200);
+
+		return response()->json(['status'=>'ok',"mensaje"=>"creado exitosamente","prueba_medica"=>$resultado], 200);
 
     }
 
@@ -122,7 +122,7 @@ class Prueba_medicaController extends Controller
         $per_id=$persona_tra->per_id;
 
         $servicio=Servicio::find($ser_id);
-        $prueba_enfermedad=Prueba_enfermedad::where('prueba_enfermedad.pm_id',$pm_id)->get();
+
 
         //$func=Funcionario::find($fun_id);
 //saca los datos del funcionario
@@ -138,9 +138,12 @@ class Prueba_medicaController extends Controller
   //        ->join('prueba_enfermedad','prueba_enfermedad.enfe_id','=','enfermedad.enfe_id')
 		// ->where('prueba_enfermedad.pm_id',$pm_id)
   //        ->get();
-        // $pruebas=Prueba_enfermedad::where('prueba_enfermedad.pm_id',$pm_id)->get();
+        $pruebas=Prueba_enfermedad::where('prueba_enfermedad.pm_id',$pm_id)
+        ->join('enfermedad','enfermedad.enfe_id', '=', 'prueba_enfermedad.enfe_id')
+        ->orderby('enfermedad.enfe_id')
+        ->get();
          //saca datos de prueba medica
-        $prueba_medica=compact('prueba_medica','persona_tra','servicio','funcionario','paciente','prueba_enfermedad');
+        $prueba_medica=compact('prueba_medica','persona_tra','servicio','funcionario','paciente','pruebas');
        return response()->json(['status'=>'ok','prueba_medica'=>$prueba_medica],200);
     }
 

@@ -36,6 +36,19 @@ class Prueba_enfermedadController extends Controller
 		return response()->json(['status'=>'ok',"mensaje"=>"creado exitosamente","prueba_enfermedad"=>$prueba_enfermedad], 200);
 
     }
+    public function update(Request $request, $pre_id)
+    {
+        $prueba_enfermedad=Prueba_enfermedad::find($pre_id);
+        if (!$prueba_enfermedad) {
+            return response()->json(["mensaje"=>"no se encuentra una prueba enfermedad con ese codigo"]);
+        }
+        // $prueba_enfermedad->pm_id=$request->pm_id;
+        // $prueba_enfermedad->enfe_id=$request->enfe_id;
+        $prueba_enfermedad->pre_resultado = $request->pre_resultado;
+        $prueba_enfermedad->userid_at='2';
+        $prueba_enfermedad->save();
+        return response()->json(['status'=>'ok',"mensaje"=>"Modificado exitosamente","prueba_enfermedad"=>$prueba_enfermedad], 200);
+    }
 
     public function crear_prueba_medica_enfermedad(Request $request)
     {
