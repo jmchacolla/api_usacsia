@@ -38,9 +38,8 @@ class Prueba_par_trat extends Model
      * @var array
      */
     protected $fillable = ['pp_id', 'trat_id', 'ppt_fecha_emision', 'ppt_url_constancia', 'ppt_fecha_constancia'];
-    
-
-    protected $hiddern = ['created_at', 'updated_at', 'deleted_at', 'userid_at'];
+    protected $hidden = ['created_at','updated_at','userid_at','deleted_at'];
+    protected $dates=['deleted_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

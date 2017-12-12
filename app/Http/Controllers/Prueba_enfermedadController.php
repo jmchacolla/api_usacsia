@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Http\Requests;
 
-use \App\Models\Prueba_Enfermedad;
+use \App\Models\Prueba_enfermedad;
 
 class Prueba_enfermedadController extends Controller
 {
@@ -26,7 +26,7 @@ class Prueba_enfermedadController extends Controller
         {
             return $validator->errors()->all();
 		}  
-		$prueba_enfermedad= new Prueba_Enfermedad();
+		$prueba_enfermedad= new Prueba_enfermedad();
 		$prueba_enfermedad->pm_id=$request->pm_id;
 		$prueba_enfermedad->enfe_id=$request->enfe_id;
 		$prueba_enfermedad->pre_resultado = $request->pre_resultado;
