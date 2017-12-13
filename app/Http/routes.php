@@ -48,13 +48,7 @@ Route::group(['middleware' => 'cors'], function ()
     Route::resource('prueba_laboratorio','Prueba_laboratorioController', ['only'=>['index','show','store','update','destroy']]);
     Route::resource('prueba_par','Prueba_parController', ['only'=>['index','show','store','update','destroy']]);
 
-    //buscar persona_tramite
-    
-    Route::get('buscar_persona_tramite/{per_ci}','Persona_tramiteController@buscar_persona_tramite');
 
-    Route::get('tramites_x_tipo_tramite/{tra_id}','Persona_tramiteController@listar_x_tipo_tramite');
-    // jhon------------------------------
-    Route::get('fichasfecha','FichaController@fichasfecha');
     // Route::get('personatramite/{pt_id}', 'Persona_tramiteController@personadetramite');
 
 
@@ -75,9 +69,15 @@ Route::group(['middleware' => 'cors'], function ()
 /*TRAMITES*/
     Route::get('tramite','TramiteController@index');
     Route::resource('tramite','TramiteController',['only' => ['store', 'update', 'destroy', 'show']]);
-/*PERSONA_TRAMITE*/
+/*PERSONA_TRAMITE*///============================================================
     Route::resource('pers_tra','Persona_tramiteController',['only' => ['store', 'update', 'destroy', 'show','index']]);
+    //buscar persona_tramite
+    Route::get('buscar_persona_tramite/{per_ci}','Persona_tramiteController@buscar_persona_tramite');
 
+    Route::get('tramites_x_tipo_tramite/{tra_id}','Persona_tramiteController@listar_x_tipo_tramite');
+    // jhon------------------------------
+    Route::get('fichasfecha','FichaController@fichasfecha');
+    /*/PERSONA_TRAMITE*///============================================================
 /*PRUEBA MEDICA*/
     Route::resource('prueba_medica','Prueba_medicaController',['only' => ['store', 'update', 'destroy', 'show','index']]);
 /*PRUEBA ENFERMEDAD*/
