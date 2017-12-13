@@ -4,7 +4,6 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-
     "hash": "72086b2bfd378ae9e695fd5c20f3a93b",
     "content-hash": "fbc83a7fc0c905bc205057829f3e1f09",
     "packages": [
@@ -2933,7 +2932,11 @@
                 "tokenizer"
             ],
 <<<<<<< HEAD
+<<<<<<< HEAD
             "time": "2017-12-04 08:55:13"
+=======
+            "time": "2017-12-04T08:55:13+00:00"
+>>>>>>> 4f253bfa9b54418b291b7138015d90cea15fcd7a
 =======
             "time": "2017-12-04T08:55:13+00:00"
 >>>>>>> 4f253bfa9b54418b291b7138015d90cea15fcd7a
@@ -3601,7 +3604,11 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
 <<<<<<< HEAD
+<<<<<<< HEAD
             "time": "2017-12-04 14:51:35"
+=======
+            "time": "2017-12-04T14:51:35+00:00"
+>>>>>>> 4f253bfa9b54418b291b7138015d90cea15fcd7a
 =======
             "time": "2017-12-04T14:51:35+00:00"
 >>>>>>> 4f253bfa9b54418b291b7138015d90cea15fcd7a
