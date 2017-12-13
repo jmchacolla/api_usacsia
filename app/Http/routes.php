@@ -19,7 +19,7 @@ Route::group(['middleware' => 'cors'], function ()
     });
     Route::get('pais','PaisController@index');
     Route::post('pais','PaisController@store');
-    Route::resource('usacsia','UsacsiaController', ['only'=>['index','update']]);
+    Route::resource('usacsia','UsacsiaController', ['only'=>['index','update','show']]);
     Route::resource('telefono','TelefonoController', ['only'=>['index','update']]);
     Route::resource('enfermedad','EnfermedadController', ['only'=>['index','show','store','update','destroy']]);
 
@@ -92,7 +92,7 @@ Route::group(['middleware' => 'cors'], function ()
     Route::get('municipio/{pro_id}','MunicipioController@municipio_provincia');
     //listar zona por municipio
     Route::get('zona/{mun_id}', 'ZonaController@index');
-    //crear persona
+    //crear,editar,ver,eliminar,listar persona
     Route::resource('persona', 'PersonaController', ['only' => ['store', 'update', 'show','destroy','index']]);
     //listar funcionarios por cargo 
     Route::get('funcionario_cargo/{cargo}', 'FuncionarioController@listaporcargo');
