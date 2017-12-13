@@ -49,15 +49,23 @@ class Persona_tramiteController extends Controller
 
 		$persona_tramite->tra_id=$request->tra_id;
 		$persona_tramite->per_id=$request->per_id;
-		$persona_tramite->pt_numero_tramite = $request->pt_numero_tramite;
+		// $persona_tramite->pt_numero_tramite = $request->pt_numero_tramite;
 		$persona_tramite->pt_vigencia_pago=$request->pt_vigencia_pago;
-		$persona_tramite->pt_fecha_ini=$request->pt_fecha_ini;
+		// $persona_tramite->pt_fecha_ini=$request->pt_fecha_ini;
 		$persona_tramite->pt_fecha_fin=$request->pt_fecha_fin;
-		$persona_tramite->pt_estado_pago=$request->pt_estado_pago;
-		$persona_tramite->pt_estado_tramite=$request->pt_estado_tramite;
+		// $persona_tramite->pt_estado_pago=$request->pt_estado_pago;
+		// $persona_tramite->pt_estado_tramite=$request->pt_estado_tramite;
+     /*VERIFICAR SI ES TRAMITE NUEVO O RENOVACION*/
 		$persona_tramite->pt_monto=$request->pt_monto;
-		$persona_tramite->pt_tipo_tramite=$request->pt_tipo_tramite;
-
+        $conteo=Persona_tramite::where('per_id', $persona_tramite->per_id)
+        ->where('tra_id', $persona_tramite->tra_id)
+        ->where('pt_estado_tramite', 'CONCLUIDO')
+        ->count();
+        if ($conteo>=1) {
+		      $persona_tramite->pt_tipo_tramite='RENOVACION';
+        }else{
+            $persona_tramite->pt_tipo_tramite='NUEVO';
+        }
 		$persona_tramite->save();
 
    		return response()->json(['status'=>'ok',"mensaje"=>"creado exitosamente","persona_tramite"=>$persona_tramite], 200);
