@@ -18,6 +18,9 @@ class EnfermedadController extends Controller
 	
 	public function show($enfe_id){
 		$enfermedad = Enfermedad::find($enfe_id);
+		if (!$enfermedad) {
+			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuenta una enfermedad con ese código.'])],404);
+		}
     	return response()->json(['status'=>'ok', 'enfermedad'=> $enfermedad], 200);
 	}
 

@@ -41,7 +41,7 @@ class Empresa extends Model
     /**
      * @var array
      */
-    protected $fillable = ['ess_id', 'cat_id', 'emp_kardex', 'emp_rubro', 'emp_nit', 'emp_url_nit', 'emp_url_licencia'];
+    protected $fillable = ['ess_id', 'cat_id', 'emp_kardex', 'emp_nit', 'emp_url_nit', 'emp_url_licencia'];
     protected $hidden = ['created_at','updated_at','userid_at','deleted_at'];
     protected $dates=['deleted_at'];
 
@@ -52,21 +52,19 @@ class Empresa extends Model
     {
         return $this->belongsTo('App\EstablecimientoSolicitante', 'ess_id', 'ess_id');
     }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function categorium()
-    {
-        return $this->belongsTo('App\Categorium', 'cat_id', 'cat_id');
-    }
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function empresaPropietarios()
     {
         return $this->hasMany('App\EmpresaPropietario', 'emp_id', 'emp_id');
+    }
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+        public function rubro()
+    {
+        return $this->hasMany('App\Rubro', 'emp_id', 'emp_id');
     }
 
     /**

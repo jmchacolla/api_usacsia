@@ -32,6 +32,9 @@ class Telefono extends Model
     /**
      * @var array
      */
-    protected $fillable = ['usa_id', 'tel_numero', 'created_at', 'updated_at', 'deleted_at', 'userid_at'];
+    protected $fillable = ['usa_id', 'tel_numero'];
+    protected $hidden = ['created_at','updated_at','userid_at','deleted_at'];
+    protected $dates=['deleted_at'];
+
 
 }
