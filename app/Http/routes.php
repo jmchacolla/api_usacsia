@@ -85,6 +85,7 @@ Route::group(['middleware' => 'cors'], function ()
     Route::post('consulta','Prueba_EnfermedadController@crear_prueba_medica_enfermedad');
 /*CARIES*/
     Route::resource('caries','CariesController',['only' => ['store', 'update', 'destroy', 'show','index']]);
+
     /*--*/
 
 
@@ -134,6 +135,9 @@ Route::group(['middleware' => 'cors'], function ()
     Route::resource('establecimiento_solicitante','EstablecimientoSolicitanteController', ['only' =>['index', 'store', 'update', 'show']]);
     //jhon fichas
     Route::resource('ficha', 'FichaController',['only' =>['index', 'store', 'update', 'show']]);
+
+    /*EMPRESA wendy -- 13-12-17*/
+    Route::resource('empresa','EmpresaController',['only' => ['store', 'update', 'destroy', 'show','index']]);
 
     
 });
