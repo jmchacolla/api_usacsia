@@ -12,11 +12,13 @@ use App\Models\Rubro_empresa;
 
 class EmpresaController extends Controller
 {
-    //
+
     public function index()
     {
-        $empresa=Empresa::all();
-    }
+        $empresa=\App\Models\Empresa::all();
+
+        return response()->json(['status'=>'ok','mensaje'=>'exito','empresa'=>$empresa],200); 
+
     public function store(Request $request)
     {
         $empresa = new Empresa();
@@ -34,5 +36,6 @@ class EmpresaController extends Controller
         $resultado =compact('empresa', 'rubro');
 
         return response()->json(["msg" => "exito", "empresa" => $resultado], 200);
+
     }
 }

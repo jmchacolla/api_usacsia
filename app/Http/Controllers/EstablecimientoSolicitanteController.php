@@ -19,7 +19,7 @@ class EstablecimientoSolicitanteController extends Controller
     public function index()
     {
         $est_sol=EstablecimientoSolicitante::all();
-        return response()->json(["msg" => "exito", "est_sol" => $est_sol], 200);
+        return response()->json(['status'=>'ok',"msg" => "exito", "est_sol" => $est_sol], 200);
 
     }
         # crea un establecimiento solicitante
