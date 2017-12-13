@@ -30,8 +30,17 @@ Route::group(['middleware' => 'cors'], function ()
 
     Route::resource('tratamiento','TratamientoController', ['only'=>['index','show','store','update','destroy']]);
     Route::post('enfermedad_tratamiento','Enfermedad_tratamientoController@store');
-    Route::post('parasito_tratamiento','Parasito_tratamientoController@store');
-    Route::resource('parasito','ParasitoController',['only'=>['index','show','store','update']]);
+    
+
+    /*vero*/
+    Route::resource('parasito_tratamiento','Parasito_tratamientoController',['only'=>['store','destroy']]);
+    //tratamientos que no estan asignados a un parasito
+    Route::get('tratamiento2/{par_id}','Parasito_tratamientoController@sin_asignar');
+    Route::resource('muestra','MuestraController', ['only'=>['store','index']]);
+    /*vero*/
+
+
+    Route::resource('parasito','ParasitoController',['only'=>['index','show','store','update','destroy']]);
     Route::resource('ficha','FichaController', ['only'=>['index','show','store','update','destroy']]);
 
     Route::resource('trat_de_parasitos_en_la_prueba','Prueba_par_tratController', ['only'=>['index','show','store','update','destroy']]);
@@ -44,6 +53,8 @@ Route::group(['middleware' => 'cors'], function ()
     Route::get('buscar_persona_tramite/{per_ci}','Persona_tramiteController@buscar_persona_tramite');
 
     Route::get('tramites_x_tipo_tramite/{tra_id}','Persona_tramiteController@listar_x_tipo_tramite');
+    // jhon------------------------------
+    Route::get('fichasfecha','FichaController@fichasfecha');
 
 
 
@@ -121,6 +132,8 @@ Route::group(['middleware' => 'cors'], function ()
 
     //JHON empresa
     Route::resource('establecimiento_solicitante','EstablecimientoSolicitanteController', ['only' =>['index', 'store', 'update', 'show']]);
+    //jhon fichas
+    Route::resource('ficha', 'FichaController',['only' =>['index', 'store', 'update', 'show']]);
 
     
 });
