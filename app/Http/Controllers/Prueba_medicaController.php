@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Http\Requests;
+use Illuminate\Support\Str;
+
 
 use App\Models\Prueba_medica;
 use App\Models\Persona_tramite;
@@ -82,22 +84,52 @@ class Prueba_medicaController extends Controller
             return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra una prueba medica con ese código.'])],404);
         }
        	
-		$prueba_medica->pt_id=$request->pt_id;
-		$prueba_medica->ser_id=$request->ser_id;
-		$prueba_medica->fun_id = $request->fun_id;
-		$prueba_medica->pm_fr=$request->pm_fr;
-		$prueba_medica->pm_fc=$request->pm_fc;
+		if($request->pt_id){
+        $prueba_medica->pt_id=$request->pt_id;
+        }
+		if($request->ser_id){
+        $prueba_medica->ser_id=$request->ser_id;
+        }
+		if($request->fun_id){
+        $prueba_medica->fun_id = $request->fun_id;
+        }
+		if($request->pm_fr){
+        $prueba_medica->pm_fr=$request->pm_fr;
+        }
+		if($request->pm_fc){
+        $prueba_medica->pm_fc=$request->pm_fc;
+        }
+        if($request->pm_pa_sistolica){
         $prueba_medica->pm_pa_sistolica=$request->pm_pa_sistolica;
+        }
+        if($request->pm_pa_diastolica){
         $prueba_medica->pm_pa_diastolica=$request->pm_pa_diastolica;
+        }
+        if($request->pm_peso){
         $prueba_medica->pm_peso=$request->pm_peso;
-		$prueba_medica->pm_peso=$request->pm_peso;
-		$prueba_medica->pm_talla=$request->pm_talla;
-		$prueba_medica->pm_imc=$request->pm_imc;
+        }
+		if($request->pm_peso){
+        $prueba_medica->pm_peso=$request->pm_peso;
+        }
+		if($request->pm_talla){
+        $prueba_medica->pm_talla=$request->pm_talla;
+        }
+		if($request->pm_imc){
+        $prueba_medica->pm_imc=$request->pm_imc;
+        }
+        if($request->pm_temperatura){
         $prueba_medica->pm_temperatura=$request->pm_temperatura;
-		$prueba_medica->pm_diagnostico=$request->pm_diagnostico;
+        }
+		if($request->pm_diagnostico){
+        $prueba_medica->pm_diagnostico=Str::upper($request->pm_diagnostico);
+        }
 
-		$prueba_medica->pm_estado=$request->pm_estado;
-		$prueba_medica->pm_fecha=$request->pm_fecha;
+		if($request->pm_estado){
+        $prueba_medica->pm_estado=Str::upper($request->pm_estado);
+        }
+		if($request->pm_fecha){
+        $prueba_medica->pm_fecha=$request->pm_fecha;
+        }
 		/*$prueba_medica->userid_at='2';*/
 		$prueba_medica->save();
 
