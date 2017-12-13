@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Model\Usacsia;
+use App\Models\Usacsia;
 
 
 class UsacsiaController extends Controller
@@ -94,13 +94,27 @@ class UsacsiaController extends Controller
 
     public function destroy($usa_id)
     {
-    	$usacsia = \awebss\Models\Usacsia::find($usa_id);
+    	$usacsia = Usacsia::find($usa_id);
     	$usacsia->delete();
 
     	return response()->json([
     		"msg" => "exito"
     		], 200
     	);
+    }
+     public function show( $usa_id)
+    {
+
+        //$es_id=$request->es_id;
+
+        $usacsia=Usacsia::find($usa_id);
+
+        if (!$usacsia)
+            {
+        return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra una USACSIA con ese código.'])],404);
+            }
+
+        return response()->json(['status'=>'ok',"msg" => "exito",'usacsia'=>$usacsia],200); 
     }
 
     
