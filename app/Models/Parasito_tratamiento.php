@@ -35,7 +35,9 @@ class Parasito_tratamiento extends Model
      * @var array
      */
     protected $fillable = ['par_id', 'trat_id'];
-    protected $hidden = ['created_at', 'updated_at', 'deleted_at', 'userid_at'];
+    protected $hidden = ['created_at','updated_at','userid_at','deleted_at'];
+    protected $dates=['deleted_at'];
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

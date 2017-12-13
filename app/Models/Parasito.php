@@ -36,7 +36,8 @@ class Parasito extends Model
      * @var array
      */
     protected $fillable = ['par_nombre', 'par_descripcion', 'par_clasificacion'];
-    protected $hidden = ['created_at', 'updated_at', 'deleted_at', 'userid_at'];
+    protected $hidden = ['created_at','updated_at','userid_at','deleted_at'];
+    protected $dates=['deleted_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

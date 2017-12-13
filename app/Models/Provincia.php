@@ -35,7 +35,9 @@ class Provincia extends Model
     /**
      * @var array
      */
-    protected $fillable = ['dep_id', 'pro_cod_sice', 'pro_nombre', 'created_at', 'updated_at', 'deleted_at', 'userid_at'];
+    protected $fillable = ['dep_id', 'pro_cod_sice', 'pro_nombre'];
+    protected $hidden = ['created_at','updated_at','userid_at','deleted_at'];
+    protected $dates=['deleted_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

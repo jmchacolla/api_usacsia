@@ -36,7 +36,9 @@ class Prueba_par extends Model
     /**
      * @var array
      */
-    protected $fillable = ['pl_id', 'par_id', 'pp_resultado', 'created_at', 'updated_at', 'deleted_at', 'userid_at'];
+    protected $fillable = ['pl_id', 'par_id', 'pp_resultado'];
+    protected $hidden = ['created_at','updated_at','userid_at','deleted_at'];
+    protected $dates=['deleted_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
