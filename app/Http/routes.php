@@ -36,7 +36,8 @@ Route::group(['middleware' => 'cors'], function ()
     Route::resource('parasito_tratamiento','Parasito_tratamientoController',['only'=>['store','destroy']]);
     //tratamientos que no estan asignados a un parasito
     Route::get('tratamiento2/{par_id}','Parasito_tratamientoController@sin_asignar');
-    Route::resource('muestra','MuestraController', ['only'=>['store','index']]);
+    Route::resource('muestra','MuestraController', ['only'=>['store','index','show']]);
+    Route::get('buscar_numero_muestra/{mue_id}','MuestraController@buscar_numero_muestra');
     /*vero*/
 
 
@@ -46,7 +47,11 @@ Route::group(['middleware' => 'cors'], function ()
     Route::resource('trat_de_parasitos_en_la_prueba','Prueba_par_tratController', ['only'=>['index','show','store','update','destroy']]);
     
     Route::resource('prueba_laboratorio','Prueba_laboratorioController', ['only'=>['index','show','store','update','destroy']]);
-    Route::resource('prueba_par','Prueba_parController', ['only'=>['index','show','store','update','destroy']]);
+    Route::resource('prueba_par','Prueba_parController', ['only'=>['store','update','destroy']]);
+    Route::get('parasitosprueba/{pl_id}','Prueba_parController@parasitosprueba');
+    Route::get('parasitos_no_prueba/{pl_id}','Prueba_parController@parasitos_no_prueba');
+
+
 
 
     // Route::get('personatramite/{pt_id}', 'Persona_tramiteController@personadetramite');
