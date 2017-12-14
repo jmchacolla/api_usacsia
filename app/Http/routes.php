@@ -80,6 +80,8 @@ Route::group(['middleware' => 'cors'], function ()
     /*/PERSONA_TRAMITE*///============================================================
 /*PRUEBA MEDICA*/
     Route::resource('prueba_medica','Prueba_medicaController',['only' => ['store', 'update', 'destroy', 'show','index']]);
+    /*historial clinico*/
+    Route::get('pruebamedicapersona/{per_ci}', 'Prueba_medicaController@pruebamedicapersona');
 /*PRUEBA ENFERMEDAD*/
     Route::resource('prueba_enfermedad','Prueba_enfermedadController',['only' => ['store', 'update', 'destroy', 'show','index']]);
 /*    */
