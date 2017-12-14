@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Http\Requests;
 
+use \App\Models\Prueba_enfermedad;
+
 class Prueba_enfermedadController extends Controller
 {
     public function index()
     {
-    	$prueba_enfermedad=\App\Models\Prueba_Enfermedad::all();
+    	$prueba_enfermedad=Prueba_Enfermedad::all();
         return response()->json(['status'=>'ok','mensaje'=>'exito','prueba_enfermedad'=>$prueba_enfermedad],200); 
     }
     public function store(Request $request)
@@ -24,7 +26,7 @@ class Prueba_enfermedadController extends Controller
         {
             return $validator->errors()->all();
 		}  
-		$prueba_enfermedad= new \App\Models\Prueba_Enfermedad();
+		$prueba_enfermedad= new Prueba_enfermedad();
 		$prueba_enfermedad->pm_id=$request->pm_id;
 		$prueba_enfermedad->enfe_id=$request->enfe_id;
 		$prueba_enfermedad->pre_resultado = $request->pre_resultado;
@@ -33,6 +35,19 @@ class Prueba_enfermedadController extends Controller
 
 		return response()->json(['status'=>'ok',"mensaje"=>"creado exitosamente","prueba_enfermedad"=>$prueba_enfermedad], 200);
 
+    }
+    public function update(Request $request, $pre_id)
+    {
+        $prueba_enfermedad=Prueba_enfermedad::find($pre_id);
+        if (!$prueba_enfermedad) {
+            return response()->json(["mensaje"=>"no se encuentra una prueba enfermedad con ese codigo"]);
+        }
+        // $prueba_enfermedad->pm_id=$request->pm_id;
+        // $prueba_enfermedad->enfe_id=$request->enfe_id;
+        $prueba_enfermedad->pre_resultado = $request->pre_resultado;
+        $prueba_enfermedad->userid_at='2';
+        $prueba_enfermedad->save();
+        return response()->json(['status'=>'ok',"mensaje"=>"Modificado exitosamente","prueba_enfermedad"=>$prueba_enfermedad], 200);
     }
 
     public function crear_prueba_medica_enfermedad(Request $request)
@@ -49,7 +64,7 @@ class Prueba_enfermedadController extends Controller
         {
             return $validator->errors()->all();
 		}  
-		$prueba_medica= new \App\Models\Prueba_Medica();
+		$prueba_medica= new Prueba_Medica();
 		$prueba_medica->pt_id=$request->pt_id;
 		$prueba_medica->ser_id=$request->ser_id;
 		$prueba_medica->fun_id = $request->fun_id;
@@ -68,7 +83,7 @@ class Prueba_enfermedadController extends Controller
 		
 
 
-		$prueba_enfermedad= new \App\Models\Prueba_Enfermedad();
+		$prueba_enfermedad= new Prueba_Enfermedad();
 		$prueba_enfermedad->pm_id=$prueba_medica->pm_id;
 		$prueba_enfermedad->enfe_id=$request->enfe_id;
 		$prueba_enfermedad->pre_resultado = $request->pre_resultado;
@@ -83,7 +98,7 @@ class Prueba_enfermedadController extends Controller
 
      public function destroy($pre_id)
     {
-        $prueba_enfermedad = \App\Models\Prueba_Enfermedad::find($pre_id);
+        $prueba_enfermedad = Prueba_Enfermedad::find($pre_id);
 
         if (!$prueba_enfermedad)
         {    

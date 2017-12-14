@@ -50,11 +50,11 @@ class Usacsia extends Model
      * @var array
      */
     protected $fillable = ['usa_nombre', 'usa_fecha_inicio_actividad', 'usa_zona_localidad_comuni', 'usa_avenida_calle', 'usa_numero', 'usa_inicio_atencion', 'usa_final_atencion', 'usa_latitud', 'usa_longitud', 'usa_altitud', 'usa_codigo', 'usa_fax', 'usa_correo_electronico', 'usa_direccion_web', 'usa_fecha_creacion', 'usa_municipio', 'usa_provincia', 'usa_departamento'];
+    protected $hidden = ['created_at','updated_at','userid_at','deleted_at'];
+    protected $dates=['deleted_at'];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    protected $hidden = ['created_at','updated_at','userid_at','deleted_at'];
-    protected $dates=['deleted_at'];
 
     public function ambientes()
     {

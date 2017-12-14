@@ -41,10 +41,13 @@ class Prueba_laboratorio extends Model
     /**
      * @var array
      */
+
     protected $fillable = ['mue_id', 'fun_id', 'pl_estado', 'pl_tipo', 'pl_color', 'pl_aspecto','pl_moco','pl_sangre','pl_fecha_recepcion', 'pl_observaciones'];
     
+    protected $hidden = ['created_at','updated_at','userid_at','deleted_at'];
+    protected $dates=['deleted_at'];
 
-    protected $hidden = ['created_at', 'updated_at', 'deleted_at', 'userid_at'];
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

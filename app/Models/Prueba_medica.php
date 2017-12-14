@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $pm_talla
  * @property int $pm_imc
  * @property string $pm_diagnostico
- * @property string $pm_tipo
  * @property string $pm_estado
  * @property string $pm_fecha
  * @property string $created_at
@@ -47,8 +46,9 @@ class Prueba_medica extends Model
     /**
      * @var array
      */
-    protected $fillable = ['pt_id', 'ser_id', 'fun_id', 'pm_fr', 'pm_fc', 'pm_peso', 'pm_talla', 'pm_imc', 'pm_diagnostico', 'pm_tipo', 'pm_estado', 'pm_fecha', 'created_at', 'updated_at', 'deleted_at', 'userid_at'];
-    protected $hidden = ['pt_id', 'ser_id', 'fun_id', 'pm_fr', 'pm_fc', 'pm_peso', 'pm_talla', 'pm_imc', 'pm_diagnostico', 'pm_tipo', 'pm_estado', 'pm_fecha'];
+    protected $fillable = ['pt_id', 'ser_id', 'fun_id', 'pm_fr', 'pm_pa_sistolica', 'pm_pa_diastolica', 'pm_fc', 'pm_peso', 'pm_talla', 'pm_imc', 'pm_diagnostico', 'pm_temperatura', 'pm_estado', 'pm_fecha'];
+    protected $hidden = ['created_at','updated_at','userid_at','deleted_at'];
+    protected $dates=['deleted_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -73,12 +73,16 @@ class Prueba_medica extends Model
     {
         return $this->belongsTo('App\Funcionario', 'fun_id', 'fun_id');
     }
+    public function ficha()
+    {
+        return $this->belongsTo('App\Ficha', 'fic_id', 'fic_id');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function pruebaEnfermedads()
+    public function prueba_enfermedad()
     {
-        return $this->hasMany('App\PruebaEnfermedad', 'pm_id', 'pm_id');
+        return $this->hasMany('App\prueba_enfermedad', 'pm_id', 'pm_id');
     }
 }

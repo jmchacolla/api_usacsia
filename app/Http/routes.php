@@ -19,7 +19,7 @@ Route::group(['middleware' => 'cors'], function ()
     });
     Route::get('pais','PaisController@index');
     Route::post('pais','PaisController@store');
-    Route::resource('usacsia','UsacsiaController', ['only'=>['index','update']]);
+    Route::resource('usacsia','UsacsiaController', ['only'=>['index','update','show']]);
     Route::resource('telefono','TelefonoController', ['only'=>['index','update']]);
     Route::resource('enfermedad','EnfermedadController', ['only'=>['index','show','store','update','destroy']]);
 
@@ -53,13 +53,8 @@ Route::group(['middleware' => 'cors'], function ()
 
 
 
-    //buscar persona_tramite
-    
-    Route::get('buscar_persona_tramite/{per_ci}','Persona_tramiteController@buscar_persona_tramite');
 
-    Route::get('tramites_x_tipo_tramite/{tra_id}','Persona_tramiteController@listar_x_tipo_tramite');
-    // jhon------------------------------
-    Route::get('fichasfecha','FichaController@fichasfecha');
+    // Route::get('personatramite/{pt_id}', 'Persona_tramiteController@personadetramite');
 
 
 
@@ -79,17 +74,25 @@ Route::group(['middleware' => 'cors'], function ()
 /*TRAMITES*/
     Route::get('tramite','TramiteController@index');
     Route::resource('tramite','TramiteController',['only' => ['store', 'update', 'destroy', 'show']]);
-/*PERSONA_TRAMITE*/
+/*PERSONA_TRAMITE*///============================================================
     Route::resource('pers_tra','Persona_tramiteController',['only' => ['store', 'update', 'destroy', 'show','index']]);
+    //buscar persona_tramite
+    Route::get('buscar_persona_tramite/{per_ci}','Persona_tramiteController@buscar_persona_tramite');
 
+    Route::get('tramites_x_tipo_tramite/{tra_id}','Persona_tramiteController@listar_x_tipo_tramite');
+    // jhon------------------------------
+    Route::get('fichasfecha','FichaController@fichasfecha');
+    /*/PERSONA_TRAMITE*///============================================================
 /*PRUEBA MEDICA*/
-    Route::resource('prueba_medica','Prueba_MedicaController',['only' => ['store', 'update', 'destroy', 'show','index']]);
+    Route::resource('prueba_medica','Prueba_medicaController',['only' => ['store', 'update', 'destroy', 'show','index']]);
 /*PRUEBA ENFERMEDAD*/
-    Route::resource('prueba_enfermedad','Prueba_EnfermedadController',['only' => ['store', 'update', 'destroy', 'show','index']]);
-    Route::get('consulta/{pm_id}','Prueba_MedicaController@listar_enfermedades_prueba');
+    Route::resource('prueba_enfermedad','Prueba_enfermedadController',['only' => ['store', 'update', 'destroy', 'show','index']]);
+/*    */
+    Route::get('consulta/{pm_id}','Prueba_medicaController@listar_enfermedades_prueba');
     Route::post('consulta','Prueba_EnfermedadController@crear_prueba_medica_enfermedad');
 /*CARIES*/
     Route::resource('caries','CariesController',['only' => ['store', 'update', 'destroy', 'show','index']]);
+
     /*--*/
 
 
@@ -108,7 +111,7 @@ Route::group(['middleware' => 'cors'], function ()
     Route::get('municipio/{pro_id}','MunicipioController@municipio_provincia');
     //listar zona por municipio
     Route::get('zona/{mun_id}', 'ZonaController@index');
-    //crear persona
+    //crear,editar,ver,eliminar,listar persona
     Route::resource('persona', 'PersonaController', ['only' => ['store', 'update', 'show','destroy','index']]);
     //listar funcionarios por cargo 
     Route::get('funcionario_cargo/{cargo}', 'FuncionarioController@listaporcargo');
@@ -137,8 +140,14 @@ Route::group(['middleware' => 'cors'], function ()
 
     //JHON empresa
     Route::resource('establecimiento_solicitante','EstablecimientoSolicitanteController', ['only' =>['index', 'store', 'update', 'show']]);
+    //jhon empresa operaciones
+    Route::resource('empresa', 'EmpresaController', ['only' =>['index', 'store', 'update', 'show']]);
+
     //jhon fichas
     Route::resource('ficha', 'FichaController',['only' =>['index', 'store', 'update', 'show']]);
+
+    /*EMPRESA wendy -- 13-12-17*/
+    Route::resource('empresa','EmpresaController',['only' => ['store', 'update', 'destroy', 'show','index']]);
 
     
 });

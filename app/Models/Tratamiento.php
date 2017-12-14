@@ -37,7 +37,9 @@ class Tratamiento extends Model
     /**
      * @var array
      */
-    protected $fillable = ['trat_nombre', 'trat_dosis', 'trat_descripcion', 'created_at', 'updated_at', 'deleted_at', 'userid_at'];
+    protected $fillable = ['trat_nombre', 'trat_dosis', 'trat_descripcion'];
+    protected $hidden = ['created_at','updated_at','userid_at','deleted_at'];
+    protected $dates=['deleted_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

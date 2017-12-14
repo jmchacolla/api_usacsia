@@ -37,7 +37,9 @@ class Tramite extends Model
      */
     protected $fillable = ['tra_nombre', 'tra_costo', 'tra_vigencia'];
 
-    protected $hidden = ['created_at', 'updated_at', 'deleted_at', 'userid_at'];
+    protected $hidden = ['created_at','updated_at','userid_at','deleted_at'];
+    protected $dates=['deleted_at'];
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
