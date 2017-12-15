@@ -151,6 +151,10 @@ class Prueba_medicaController extends Controller
         $fun_id=$prueba_medica->fun_id;
 
         $persona_tra=Persona_tramite::find($pt_id);
+        if (!$persona_tra)
+        {
+            return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra el trámite con ese código.'])],404);
+        }
         $per_id=$persona_tra->per_id;
 
         $servicio=Servicio::find($ser_id);
