@@ -211,10 +211,18 @@ class Prueba_medicaController extends Controller
 
     public function estadopruebamedica($pm_id)
     {
-        $pruebamedica=Prueba_medica::where('prueba_enfermedad', 'prueba_enfermedad.pm_id','prueba_medica.pm_id')
+        $pm=Prueba_medica::find($pm_id);
+         if (!$pm)
+        {
+            return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra una prueba medica con ese código.'])],404);
+        }
+        $pruebaenfermedad=Prueba_enfermedad::where('pm_id', $pm_id)
         ->where('prueba_enfermedad.pre_resultado','=', 'true')
-        ->get();
-
+        ->count();
+        // ->get();
+        
+         if ($pruebaenfermedad<=0)
+        {  return response()->json(['status'=>'ok','mensaje'=>'exito','pruebamedica'=>true],200);}
         return response()->json(['status'=>'ok','mensaje'=>'exito','pruebamedica'=>false],200); 
     }
 
