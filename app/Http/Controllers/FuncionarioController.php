@@ -200,7 +200,7 @@ class FuncionarioController extends Controller
        
         $resultado=compact('persona', 'imagen','funcionario');
 
-         return response()->json(["msg" => "editado exitosamente", "funcionario" => $resultado], 200);
+         return response()->json(['status'=>'ok',"msg" => "editado exitosamente", "funcionario" => $resultado], 200);
     }
     public function editar_fun(Request $request, $fun_id)
 
@@ -212,8 +212,14 @@ class FuncionarioController extends Controller
             return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un funcionario con ese código.'])],404);
         }
 
-        $input = $request->all();
-        $funcionario->update($input);
+        /*$input = $request->all();
+        
+        $funcionario->update($input);*/
+        
+        $funcionario->fun_profesion=Str::upper($request->fun_profesion);
+        $funcionario->fun_cargo=Str::upper($request->fun_cargo);
+        $funcionario->fun_estado=Str::upper($request->fun_estado);
+        $funcionario->save();
 
         return response()->json(['status'=>'ok',"msg" => "editado exitosamente","funcionario" => $funcionario], 200);
     }
