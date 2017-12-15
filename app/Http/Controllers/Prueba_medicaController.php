@@ -227,6 +227,22 @@ class Prueba_medicaController extends Controller
         $estadoprueebas=Prueba_enfermedad::where('prueba_enfermedad.pm_id',$pm_id);
         $estado=false;
     }
+    //retorna todas la pruebas medicas de una persona 
+    public function pruebamedicapersona($per_ci)
+    {
+        // $persona=Persona::where('per_ci', $per_ci)->get();
+        // $pertramite=Persona_tramite::where('per_id','persona.per_id')->get();
+        $listapruebas=Prueba_medica::select('prueba_medica.pm_id', 'prueba_medica.pm_fecha','prueba_medica.pm_diagnostico')
+        ->join('persona_tramite','prueba_medica.pt_id','=', 'persona_tramite.pt_id')
+        ->join('persona', 'persona_tramite.per_id', '=', 'persona.per_id')
+        ->where( 'persona.per_ci','=', $per_ci)
+        ->get();
+        
+        // if (!$listatramitescas) {
+        //     return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra tramites con ese CI.'])],404);
+        // }
+        return response()->json(['status'=>'ok','mensaje'=>'exito','pruebas'=>$listapruebas],200); 
+    }
    
 
 }
