@@ -13,9 +13,20 @@ class MuestraController extends Controller
     //
      public function store(Request $request)
     {
+        $hoy=date('Y-m-d');
+        $ultima_muestra=Muestra::select('muestra.mue_num_muestra')
+        ->where('muestra.mue_fecha', $hoy)
+        ->max('muestra.mue_num_muestra');
+
+        $numero_muestra=$ultima_muestra+1;
+        if(!$ultima_muestra)
+        {
+            $numero_muestra=1;
+        }
+
         $muestra =new Muestra();
         $muestra->pt_id=$request->pt_id;
-        $muestra->mue_num_muestra=$request->mue_num_muestra;
+        $muestra->mue_num_muestra=$numero_muestra;
         $muestra->save();
 
         return response()->json(['status'=>'ok',"msg" => "exito",'muestra'=>$muestra],200); 
