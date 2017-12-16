@@ -85,8 +85,10 @@ Route::group(['middleware' => 'cors'], function ()
     /*/PERSONA_TRAMITE*///============================================================
 /*PRUEBA MEDICA*/
     Route::resource('prueba_medica','Prueba_medicaController',['only' => ['store', 'update', 'destroy', 'show','index']]);
-    /*historial clinico perci de persona*/
+    /* jhon  historial clinico perci de persona*/
     Route::get('pruebamedicapersona/{per_ci}', 'Prueba_medicaController@pruebamedicapersona');
+    /*jhon ----estado de prueba enfermedad desde si al menos 1 es positivo=>false pruebas enfermedades*/
+    Route::get('estadopruebamedica/{pm_id}', 'Prueba_medicaController@estadopruebamedica');
 /*PRUEBA ENFERMEDAD*/
     Route::resource('prueba_enfermedad','Prueba_enfermedadController',['only' => ['store', 'update', 'destroy', 'show','index']]);
 /*    */

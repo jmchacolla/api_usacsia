@@ -83,58 +83,22 @@ class Prueba_medicaController extends Controller
         {
             return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra una prueba medica con ese código.'])],404);
         }
-       	
-		if($request->pt_id){
-        $prueba_medica->pt_id=$request->pt_id;
-        }
-		if($request->ser_id){
-        $prueba_medica->ser_id=$request->ser_id;
-        }
-		if($request->fun_id){
-        $prueba_medica->fun_id = $request->fun_id;
-        }
-		if($request->pm_fr){
-        $prueba_medica->pm_fr=$request->pm_fr;
-        }
-		if($request->pm_fc){
-        $prueba_medica->pm_fc=$request->pm_fc;
-        }
-        if($request->pm_pa_sistolica){
-        $prueba_medica->pm_pa_sistolica=$request->pm_pa_sistolica;
-        }
-        if($request->pm_pa_diastolica){
-        $prueba_medica->pm_pa_diastolica=$request->pm_pa_diastolica;
-        }
-        if($request->pm_peso){
-        $prueba_medica->pm_peso=$request->pm_peso;
-        }
-		if($request->pm_peso){
-        $prueba_medica->pm_peso=$request->pm_peso;
-        }
-		if($request->pm_talla){
-        $prueba_medica->pm_talla=$request->pm_talla;
-        }
-		if($request->pm_imc){
-        $prueba_medica->pm_imc=$request->pm_imc;
-        }
-        if($request->pm_temperatura){
-        $prueba_medica->pm_temperatura=$request->pm_temperatura;
-        }
-		if($request->pm_diagnostico){
-        $prueba_medica->pm_diagnostico=Str::upper($request->pm_diagnostico);
-        }
-
-		if($request->pm_estado){
-        $prueba_medica->pm_estado=Str::upper($request->pm_estado);
-        }
-		if($request->pm_fecha){
-        $prueba_medica->pm_fecha=$request->pm_fecha;
-        }
+		if($request->pt_id){$prueba_medica->pt_id=$request->pt_id;}
+		if($request->ser_id){$prueba_medica->ser_id=$request->ser_id;}
+		if($request->fun_id){$prueba_medica->fun_id = $request->fun_id;}
+		if($request->pm_fr){$prueba_medica->pm_fr=$request->pm_fr;}
+		if($request->pm_fc){$prueba_medica->pm_fc=$request->pm_fc;}
+        if($request->pm_pa_sistolica){$prueba_medica->pm_pa_sistolica=$request->pm_pa_sistolica;}
+        if($request->pm_pa_diastolica){$prueba_medica->pm_pa_diastolica=$request->pm_pa_diastolica;}
+        if($request->pm_peso){$prueba_medica->pm_peso=$request->pm_peso;}
+		if($request->pm_talla){$prueba_medica->pm_talla=$request->pm_talla;}
+		if($request->pm_imc){$prueba_medica->pm_imc=$request->pm_imc;}
+        if($request->pm_temperatura){$prueba_medica->pm_temperatura=$request->pm_temperatura;}
+		if($request->pm_diagnostico){$prueba_medica->pm_diagnostico=Str::upper($request->pm_diagnostico);}
+		if($request->pm_estado){$prueba_medica->pm_estado=Str::upper($request->pm_estado);}
+		if($request->pm_fecha){$prueba_medica->pm_fecha=$request->pm_fecha;}
 		/*$prueba_medica->userid_at='2';*/
 		$prueba_medica->save();
-
-
-
         return response()->json(['status'=>'ok',"mensaje"=>"editado exitosamente","prueba_medica"=>$prueba_medica], 200);
         
     
@@ -156,15 +120,11 @@ class Prueba_medicaController extends Controller
             return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra el trámite con ese código.'])],404);
         }
         $per_id=$persona_tra->per_id;
-
         $servicio=Servicio::find($ser_id);
-
-
         //$func=Funcionario::find($fun_id);
 //saca los datos del funcionario
          $funcionario=Funcionario::select('funcionario.fun_id','fun_cargo','persona.per_id','per_ci','per_ci_expedido','per_nombres','per_apellido_primero','per_apellido_segundo','per_fecha_nacimiento','per_genero','per_numero_celular','per_tipo_documento','per_pais')
          ->join('persona','persona.per_id','=','funcionario.per_id')->where('funcionario.fun_id','=',$fun_id)->first();
-
          //saca los datos del paciente
          $paciente=Persona::select('persona.per_id','per_ci','per_ci_expedido','per_nombres','per_apellido_primero','per_apellido_segundo','per_fecha_nacimiento','per_genero','per_numero_celular','per_tipo_documento','per_pais', 'per_ocupacion')
         ->where('persona.per_id','=',$per_id)->first();
@@ -247,6 +207,23 @@ class Prueba_medicaController extends Controller
         // }
         return response()->json(['status'=>'ok','mensaje'=>'exito','pruebas'=>$listapruebas],200); 
     }
-   
+    
+
+    public function estadopruebamedica($pm_id)
+    {
+        $pm=Prueba_medica::find($pm_id);
+         if (!$pm)
+        {
+            return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra una prueba medica con ese código.'])],404);
+        }
+        $pruebaenfermedad=Prueba_enfermedad::where('pm_id', $pm_id)
+        ->where('prueba_enfermedad.pre_resultado','=', 'true')
+        ->count();
+        // ->get();
+        
+         if ($pruebaenfermedad<=0)
+        {  return response()->json(['status'=>'ok','mensaje'=>'exito','pruebamedica'=>true],200);}
+        return response()->json(['status'=>'ok','mensaje'=>'exito','pruebamedica'=>false],200); 
+    }
 
 }
