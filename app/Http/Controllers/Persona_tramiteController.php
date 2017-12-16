@@ -142,12 +142,12 @@ class Persona_tramiteController extends Controller
         {
             $numero_muestra=1;
         } 
-        $persona_tramite = Persona_tramite::select('persona_tramite.pt_id','per_nombres','per_apellido_primero', 'per_apellido_segundo', 'per_ci', 'per_ci_expedido','mue_num_muestra')
+        $persona_tramite = Persona_tramite::select('persona_tramite.pt_id','per_nombres','per_apellido_primero', 'per_apellido_segundo', 'per_ci', 'per_ci_expedido'/*,'mue_num_muestra'*/)
         ->join('persona', 'persona.per_id','=', 'persona_tramite.per_id')
-        ->join('muestra', 'muestra.pt_id',"=", 'persona_tramite.pt_id')
+        // ->join('muestra', 'muestra.pt_id',"=", 'persona_tramite.pt_id')
         ->where('persona.per_ci', $per_ci)
         ->get()->first();
-        if (!$persona_tramite->first())
+        if (!$persona_tramite)
         {    
             return response()->json(["mensaje"=>"No se encuentra una persona_tramite con ese codigo"]);
         } 
