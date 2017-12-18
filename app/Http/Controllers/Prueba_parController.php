@@ -27,6 +27,7 @@ class Prueba_parController extends Controller
         $parasitos_asignados=Prueba_par::where('prueba_par.pl_id',$pl_id)->select('par_id')->get();
         $prueba_par = Parasito::select('parasito.par_id','parasito.par_nombre')
         ->whereNotIn('parasito.par_id',$parasitos_asignados)
+
         ->get();
         
         return response()->json(['status'=>'ok','mensaje'=>'exito','pruebaparasito'=>$prueba_par],200);

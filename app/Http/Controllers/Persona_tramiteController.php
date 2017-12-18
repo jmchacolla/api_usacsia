@@ -140,10 +140,10 @@ class Persona_tramiteController extends Controller
     {
         $hoy=date('Y-m-d');
 
-
         $concluido="CONCLUIDO";
         $vencido="VENCIDO";
         $persona_tramite = Persona_tramite::select('persona_tramite.pt_id','persona_tramite.pt_estado_tramite','per_nombres','per_apellido_primero', 'per_apellido_segundo', 'per_ci', 'per_ci_expedido')
+        ->where('persona_tramite.tra_id',1)
         ->where('persona_tramite.pt_estado_tramite','!=',$concluido)
         ->where('persona_tramite.pt_estado_tramite','!=',$vencido)
         ->join('persona', 'persona.per_id','=', 'persona_tramite.per_id')
@@ -159,7 +159,7 @@ class Persona_tramiteController extends Controller
             ->join('persona','persona.per_id','=','persona_tramite.per_id')
             ->where('muestra.pt_id', $idepersonatramite)
             ->where('muestra.mue_fecha', $hoy)
-            ->get();
+            ->first();
             if($existe){
                 return response()->json(['status'=>'ok','msg'=>"con numero de muestra",'muestra'=>$existe],200); 
             }
@@ -198,6 +198,7 @@ class Persona_tramiteController extends Controller
         $concluido="CONCLUIDO";
         $vencido="VENCIDO";
         $persona_tramite = Persona_tramite::select('persona_tramite.pt_id','persona_tramite.pt_estado_tramite','per_nombres','per_apellido_primero', 'per_apellido_segundo', 'per_ci', 'per_ci_expedido')
+        ->where('persona_tramite.tra_id',1)
         ->where('persona_tramite.pt_estado_tramite','!=',$concluido)
         ->where('persona_tramite.pt_estado_tramite','!=',$vencido)
         ->join('persona', 'persona.per_id','=', 'persona_tramite.per_id')
@@ -213,7 +214,7 @@ class Persona_tramiteController extends Controller
             ->join('persona','persona.per_id','=','persona_tramite.per_id')
             ->where('ficha.pt_id', $idepersonatramite)
             ->where('ficha.fic_fecha', $hoy)
-            ->get();
+            ->first();
             if($existe){
                 return response()->json(['status'=>'ok','msg'=>"con numero de ficha",'ficha'=>$existe],200); 
             }
