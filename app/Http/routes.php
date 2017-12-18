@@ -47,6 +47,10 @@ Route::group(['middleware' => 'cors'], function ()
     Route::resource('trat_de_parasitos_en_la_prueba','Prueba_par_tratController', ['only'=>['index','show','store','update','destroy']]);
     
     Route::resource('prueba_laboratorio','Prueba_laboratorioController', ['only'=>['index','show','store','update','destroy']]);
+    //retorna la ultima prueba laboratorio que se realizó
+    Route::get('ultima_prueba_laboratorio/{pt_id}','Prueba_laboratorioController@ultima_pl_tramite');
+    
+
     Route::resource('prueba_par','Prueba_parController', ['only'=>['store','update','destroy']]);
     Route::get('parasitosprueba/{pl_id}','Prueba_parController@parasitosprueba');
     Route::get('parasitos_no_prueba/{pl_id}','Prueba_parController@parasitos_no_prueba');
@@ -80,7 +84,7 @@ Route::group(['middleware' => 'cors'], function ()
     Route::get('buscar_persona_tramite/{per_ci}','Persona_tramiteController@buscar_persona_tramite');
 
     Route::get('tramites_x_tipo_tramite/{tra_id}','Persona_tramiteController@listar_x_tipo_tramite');
-    // jhon------------------------------
+    // jhon------------------------------fichas por fecha
     Route::get('fichasfecha','FichaController@fichasfecha');
     /*/PERSONA_TRAMITE*///============================================================
 /*PRUEBA MEDICA*/
