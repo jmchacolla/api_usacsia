@@ -14,6 +14,9 @@ use App\Models\Zona;
 use App\Models\Municipio;
 use App\Models\Provincia;
 use App\Models\Departamento;
+use App\Models\Ficha;
+use App\Models\Prueba_medica;
+use App\Models\Prueba_laboratorio;
 
 
 class Persona_tramiteController extends Controller
@@ -179,8 +182,33 @@ class Persona_tramiteController extends Controller
 
         return response()->json(['status'=>'ok','msg'=>'exito',"persona_tramite"=>$persona_tramite], 200);
     }
+      public function ver($pt_id)
+    {
 
+        $persona_tramite= Persona_tramite::find($pt_id);
+        if (!$persona_tramite)
+        {
+            return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra la persona_tramite con ese código.'])],404);
+        }
+        $tramite=Tramite::find($persona_tramite->tra_id);
+        $persona=Persona::find($persona_tramite->per_id);
 
+         $ficha = Ficha::select('ficha.fic_id','pt_id')
+        ->where('pt_id',$pt_id)
+        ->get()->first();
+        $prueba_medica=Prueba_medica::select('prueba_medica.pm_id','pm_estado','pm_diagnostico')
+        ->where('fic_id',($ficha->fic_id))
+        ->get()->first();
+        $muestra = Muestra::select('muestra.mue_id','pt_id')
+        ->where('pt_id',$pt_id)
+        ->get()->first();
+        $prueba_laboratorio=Prueba_laboratorio::select('prueba_laboratorio.pl_id','pl_estado')
+        ->where('mue_id',($muestra->mue_id))
+        ->get()->first();
 
+        $resultado=compact('persona_tramite', 'persona','tramite','muestra','prueba_laboratorio','ficha','prueba_medica');
+        return response()->json(['status'=>'ok','pertramite'=>$resultado],200);
+       
+    }
 
 }

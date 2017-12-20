@@ -158,6 +158,8 @@ Route::group(['middleware' => 'cors'], function ()
     Route::resource('empresa','EmpresaController',['only' => ['store', 'update', 'destroy', 'show','index']]);
 // permite listar a personas que ya concluyeron su tramite
      Route::get('lista_final','Persona_tramiteController@lista_pers_tra');
+     // permite listar a personas que ya concluyeron su tramite
+     Route::get('ver_c/{pt_id}','Persona_tramiteController@ver');
 
 
     
