@@ -163,6 +163,26 @@ class Persona_tramiteController extends Controller
         }
 
 
+    /*lista de personas que concluyeron el tramite*/
+     public function lista_pers_tra()
+    {
+        /*$hoy=date('Y-m-d');*/
+/*      $concluido="CONCLUIDO";
+        $vencido="VENCIDO";*/
+        $persona_tramite = Persona_tramite::select('persona_tramite.pt_id','persona_tramite.pt_estado_tramite','persona.per_id','per_nombres','per_apellido_primero', 'per_apellido_segundo', 'per_ci', 'per_ocupacion','per_ci_expedido')
+        ->where('pt_estado_tramite','CONCLUIDO')
+        ->join('persona', 'persona.per_id','=', 'persona_tramite.per_id')
+       /* ->join('prueba_medica','prueba_medica.pt_id','=','persona_tramite.pt_id')
+        ->where('prueba_medica.estado','OK')
+        ->join('prueba_laboratorio','prueba_laboratorio.pt_id','=','persona_tramite.pt_id')
+        ->where('prueba_laboratorio.estado','OK')*/
+        ->orderBy('persona_tramite.created_at')
+        ->get();
+
+        return response()->json(['status'=>'ok','msg'=>'exito',"persona_tramite"=>$persona_tramite], 200);
+    }
+
+
 
 
 }

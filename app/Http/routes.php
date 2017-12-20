@@ -150,6 +150,9 @@ Route::group(['middleware' => 'cors'], function ()
 
     /*EMPRESA wendy -- 13-12-17*/
     Route::resource('empresa','EmpresaController',['only' => ['store', 'update', 'destroy', 'show','index']]);
+// permite listar a personas que ya concluyeron su tramite
+     Route::get('lista_final','Persona_tramiteController@lista_pers_tra');
+
 
     
 });
