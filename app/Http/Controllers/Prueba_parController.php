@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Validator;
 use App\Http\Requests;
 use App\Models\Prueba_par;
 use App\Models\Parasito;
@@ -33,14 +33,26 @@ class Prueba_parController extends Controller
     }
 
         public function store(Request $request){
+        $validator = Validator::make($request->all(), [
+            
+            'pl_id' => 'required',
+            'par_id' => 'required'
+        ]);
+
+        if ($validator->fails()) 
+        {
+            return $validator->errors()->all();
+        }
 	    $prueba_par = new Prueba_par();
 		$prueba_par->pl_id = $request->pl_id;
     	$prueba_par->par_id = $request->par_id;
-    	$prueba_par->pp_resultado = $request->pp_resultado;
 	    $prueba_par->save();
 	    return response()->json(['status'=>'ok','mensaje'=>'exito','prueba_par'=>$prueba_par],200);
     }
 
+
+
+/*revisar si se utiliza*/
         public function update(Request $request, $par_id){
     	$prueba_par = Prueba_par::find($par_id);
     	$prueba_par->pp_resultado = $request->pp_resultado;
