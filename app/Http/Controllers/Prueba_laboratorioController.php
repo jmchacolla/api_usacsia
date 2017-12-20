@@ -9,6 +9,8 @@ use App\Models\Prueba_laboratorio;
 use App\Models\Persona_tramite;
 use App\Models\Prueba_par;
 use App\Models\Persona;
+use App\Models\Funcionario;
+use App\Models\Muestra;
 
 class Prueba_laboratorioController extends Controller
 {
@@ -19,9 +21,10 @@ class Prueba_laboratorioController extends Controller
         ->join('persona_tramite','persona_tramite.pt_id','=','muestra.pt_id')
         ->join('persona','persona.per_id','=','persona_tramite.per_id')
         ->get();
+        if (!$prueba_laboratorio) {
+            return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra una prueba laboratorio con ese código.'])],404);
+        }
         /*enviar el numero de tramite y el nombre de la persona a la que le pertenece*/
-    	
-        
     	return response()->json(['status'=>'ok','mensaje'=>'exito','prueba_laboratorio'=>$prueba_laboratorio],200);
     }
 
@@ -31,30 +34,29 @@ class Prueba_laboratorioController extends Controller
     	$prueba_laboratorio->fun_id = $request->fun_id;	
         $prueba_laboratorio->pl_estado = $request->pl_estado;
 	    $prueba_laboratorio->save();
-
 	    return response()->json(['status'=>'ok','mensaje'=>'exito','prueba_laboratorio'=>$prueba_laboratorio],200);
     }
 
-        public function show($pl_id){
-    	
-
+    public function show($pl_id){
     	$prueba = Prueba_laboratorio::select('pl_id','persona_tramite.pt_id','persona_tramite.pt_numero_tramite','persona.per_id', 'per_nombres', 'per_apellido_primero', 'per_apellido_segundo','pl_aspecto','pl_observaciones','pl_estado','pl_color','pl_tipo','pl_fecha_recepcion')
         ->join('muestra','muestra.mue_id','=','prueba_laboratorio.mue_id')
     	->join('persona_tramite', 'persona_tramite.pt_id','=','muestra.pt_id')
     	->join('persona', 'persona.per_id', '=','persona_tramite.per_id')
     	->where('pl_id',$pl_id)
     	->get()->first();
-
-
-   
- 
+        if (!$prueba) {
+            return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra una prueba laboratorio con ese código.'])],404);
+        }
     	$resultado=compact('prueba_laboratorio','persona', 'prueba', 'pruebas_par');
 
 	    return response()->json(['status'=>'ok','mensaje'=>'exito','resultado'=>$resultado],200);
     }
 
-        public function update(Request $request, $pl_id){
+    public function update(Request $request, $pl_id){
     	$prueba_laboratorio = Prueba_laboratorio::find($pl_id);
+        if (!$prueba_laboratorio) {
+            return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra una prueba laboratorio con ese código.'])],404);
+        }
     	$prueba_laboratorio->pl_estado = $request->pl_estado;
     	$prueba_laboratorio->pl_tipo = $request->pl_tipo;
     	$prueba_laboratorio->pl_color = $request->pl_color;
@@ -64,8 +66,38 @@ class Prueba_laboratorioController extends Controller
     	$prueba_laboratorio->pl_fecha_recepcion = $request->pl_fecha_recepcion;
     	$prueba_laboratorio->pl_observaciones = $request->pl_observaciones;		
 	    $prueba_laboratorio->save();
-
 	    return response()->json(['status'=>'ok','mensaje'=>'exito','prueba_laboratorio'=>$prueba_laboratorio],200);
+    }
+    // debuelve la ultima prueba_laboratoriodel tramite
+    public function ultima_pl_tramite($pt_id)
+    {
+        $pl=Prueba_laboratorio:: select('prueba_laboratorio.pl_id', 'prueba_laboratorio.pl_color', 'prueba_laboratorio.pl_aspecto', 'prueba_laboratorio.pl_fecha_recepcion','prueba_laboratorio.pl_estado', 'prueba_laboratorio.fun_id','muestra.mue_id', 'muestra.mue_num_muestra')
+        ->join('muestra', 'muestra.mue_id', '=', 'prueba_laboratorio.mue_id')
+        ->where('muestra.pt_id', '=', $pt_id)
+        ->latest('prueba_laboratorio')
+        ->first();
+        if (!$pl) {
+            return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra una prueba laboratorio con ese código.'])],404);
+        }
+        $fun=Funcionario::find($pl->fun_id);
+        $per=Persona::find($fun->per_id);
+        $prupar=Prueba_par::select('prueba_par.pp_id', 'parasito.par_id','parasito.par_nombre', 'prueba_par.pl_id', 'prueba_par.pp_resultado')
+        ->join('parasito', 'parasito.par_id', '=', 'prueba_par.par_id')
+        ->where('prueba_par.pl_id', $pl->pl_id)
+        ->get();
+        if (!$pl) {
+            return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra una registros con ese código.'])],404);
+        }
+        return response()->json(['status'=>'ok','mensaje'=>'exito','prueba_laboratorio'=>$pl, 'prupar'=>$prupar,'fun'=>$fun, 'per'=>$per],200);
+    }
+    // Retorna el estado de la prueba de laboratorio, false si al menos uno de las prueba_par es positovo y false si todos son negativos
+    public function estadopruebalaboratorio($pl_id)
+    {
+        $prueba_laboratorio=Prueba_laboratorio::find($pl_id);
+        if (!$prueba_laboratorio) {
+            return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra una registros con ese código.'])],404);
+        }
+        return response()->json(['status'=>'ok','mensaje'=>'exito','prueba_laboratorio'=>$prueba_laboratorio],200);
     }
 
 

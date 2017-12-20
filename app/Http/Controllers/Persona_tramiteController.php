@@ -76,18 +76,16 @@ class Persona_tramiteController extends Controller
         {
             return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un ambiente con ese código.'])],404);
         }
-
-        
-       	$persona_tramite->tra_id=$request->tra_id;
-		$persona_tramite->per_id=$request->per_id;
-		$persona_tramite->pt_numero_tramite = $request->pt_numero_tramite;
-		$persona_tramite->pt_vigencia_pago=$request->pt_vigencia_pago;
-		$persona_tramite->pt_fecha_ini=$request->pt_fecha_ini;
-		$persona_tramite->pt_fecha_fin=$request->pt_fecha_fin;
-		$persona_tramite->pt_estado_pago=$request->pt_estado_pago;
-		$persona_tramite->pt_estado_tramite=$request->pt_estado_tramite;
-		$persona_tramite->pt_monto=$request->pt_monto;
-		$persona_tramite->pt_tipo_tramite=$request->pt_tipo_tramite;
+       	if ($request->tra_id) {$persona_tramite->tra_id=$request->tra_id;}
+		if ($request->per_id) {$persona_tramite->per_id=$request->per_id;}
+		if ($request->pt_numero_tramite) {$persona_tramite->pt_numero_tramite = $request->pt_numero_tramite;}
+		if ($request->pt_vigencia_pago) {$persona_tramite->pt_vigencia_pago=$request->pt_vigencia_pago;}
+		if ($request->pt_fecha_ini) {$persona_tramite->pt_fecha_ini=$request->pt_fecha_ini;}
+		if ($request->pt_fecha_fin) {$persona_tramite->pt_fecha_fin=$request->pt_fecha_fin;}
+		if ($request->pt_estado_pago) {$persona_tramite->pt_estado_pago=$request->pt_estado_pago;}
+		if ($request->pt_estado_tramite) {$persona_tramite->pt_estado_tramite=$request->pt_estado_tramite;}
+		if ($request->pt_monto) {$persona_tramite->pt_monto=$request->pt_monto;}
+		if ($request->pt_tipo_tramite) {$persona_tramite->pt_tipo_tramite=$request->pt_tipo_tramite;}
        /* $ambientes->userid_at='2';*/
         $persona_tramite->save();
 

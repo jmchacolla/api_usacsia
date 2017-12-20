@@ -88,6 +88,7 @@ class FichaController extends Controller
         ->where('fic_fecha', '>=', $fecha1)
         ->where('fic_fecha', '<=', $fecha2)
         ->where('fic_estado','=', $fic_estado)
+        ->orderby('fic_numero','asc')
         ->get();
         return response()->json(['status'=>'ok','mensaje'=>'exito','fichas'=>$fichas],200);
     }
