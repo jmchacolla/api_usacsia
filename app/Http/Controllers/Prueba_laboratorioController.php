@@ -42,9 +42,6 @@ class Prueba_laboratorioController extends Controller
         {
             return $validator->errors()->all();
         } 
-
-        
-
     	$prueba_laboratorio = new Prueba_laboratorio();
     	$prueba_laboratorio->mue_id = $request->mue_id;
     	$prueba_laboratorio->fun_id = $request->fun_id;	
@@ -92,12 +89,12 @@ class Prueba_laboratorioController extends Controller
 
     	$prueba_laboratorio = Prueba_laboratorio::find($pl_id);
     	$prueba_laboratorio->pl_estado = $observado;
-    	$prueba_laboratorio->pl_tipo = $request->pl_tipo;
-    	$prueba_laboratorio->pl_color = $request->pl_color;
-    	$prueba_laboratorio->pl_aspecto = $request->pl_aspecto;
+    	$prueba_laboratorio->pl_tipo = Str::upper($request->pl_tipo);
+    	$prueba_laboratorio->pl_color = Str::upper($request->pl_color);
+    	$prueba_laboratorio->pl_aspecto = Str::upper($request->pl_aspecto);
         $prueba_laboratorio->pl_moco = $request->pl_moco;
         $prueba_laboratorio->pl_sangre = $request->pl_sangre;
-    	$prueba_laboratorio->pl_observaciones = $request->pl_observaciones;		
+    	$prueba_laboratorio->pl_observaciones = ($request->pl_observaciones);		
 	    $prueba_laboratorio->save();
 
 	    return response()->json(['status'=>'ok','mensaje'=>'exito','prueba_laboratorio'=>$prueba_laboratorio,'prueba_par'=>$pruebapar],200);

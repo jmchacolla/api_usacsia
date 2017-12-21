@@ -64,7 +64,7 @@ class MuestraController extends Controller
         ->first();
         
         
-        if(!$muestra){
+        if($muestra){
             $idemuestra=$muestra->mue_id;
             $existe=Prueba_laboratorio::select('pl_id','prueba_laboratorio.mue_id','pl_estado','per_ci','per_ci_expedido','persona_tramite.pt_id','per_nombres','per_apellido_primero','per_apellido_segundo','per_fecha_nacimiento','mue_num_muestra','mue_tipo')
             ->join('muestra','muestra.mue_id','=','prueba_laboratorio.mue_id')
