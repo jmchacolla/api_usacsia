@@ -63,6 +63,8 @@ class Prueba_laboratorioController extends Controller
     	->where('pl_id',$pl_id)
     	->first();
 
+        
+
         $fun_id=$prueba->fun_id;
         $funcionario=Funcionario::select('fun_id','persona.per_id','per_nombres','per_apellido_primero','per_apellido_segundo','per_ci','per_ci_expedido')
         ->join('persona','persona.per_id','=','funcionario.per_id')
