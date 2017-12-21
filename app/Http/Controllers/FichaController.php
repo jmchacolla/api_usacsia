@@ -20,41 +20,49 @@ class FichaController extends Controller
     }
 
     public function store(Request $request){
-    	$ficha = new Ficha();
-		$ficha->pt_id = $request->pt_id;
-    	$ficha->fic_numero = $request->fic_numero;//se debe generar en bd
     	
+        $hoy=date('Y-m-d');
+        $ultima_ficha=Ficha::select('fic_numero')
+        ->where('ficha.fic_fecha', $hoy)
+        ->max('ficha.fic_numero');
 
-        $pertra = Persona_tramite::find($request->pt_id);
-        if (!$pertra) {
-            return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra el tramite'])],404);
+        $numero_ficha=$ultima_ficha+1;
+        if(!$ultima_ficha)
+        {
+            $numero_ficha=1;
         }
-        if ($pertra->pt_estado='INICIADO') {
-            $ficha->fic_tipo = 'NUEVO';
-            $ficha->save();
-            return response()->json(['status'=>'ok','mensaje'=>'exito','ficha'=>$ficha],200);
-        }else{
-            if ($pertra->pt_estado='OBSERVADO') {
-                $ficha->fic_tipo = 'RECONSULTA';
-                $ficha->save();
-                return response()->json(['status'=>'ok','mensaje'=>'exito','ficha'=>$ficha],200);
-            }else{
-                if ($pertra->pt_estado='VENCIDO') {
-                    return response()->json(['errors'=>array(['code'=>404,'message'=>'Este trámite ya esta vencido debe, iniciar el trámite nuevamente'])],404);
-                }else{
-                    if ($pertra->pt_estado='CONCLUIDO') {
-                        return response()->json(['errors'=>array(['code'=>404,'message'=>'Este trámite ya esta concluido.'])],404);
-                    }else{
-                        return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra el tramite'])],404);
-                    }
-                }
-            }
-        }
-        
-        
 
+        $ficha = new Ficha();
+		$ficha->pt_id = $request->pt_id;
+        $ficha->fic_numero = $numero_ficha;
+        $ficha->save();
 
-
+        return response()->json(['status'=>'ok',"msg" => "exito",'ficha'=>$ficha],200); 
+        // $pertra = Persona_tramite::find($request->pt_id);
+        // if (!$pertra) {
+        //     return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra el tramite'])],404);
+        // }
+        // if ($pertra->pt_estado='INICIADO') {
+        //     $ficha->fic_tipo = 'NUEVO';
+        //     $ficha->save();
+        //     return response()->json(['status'=>'ok','mensaje'=>'exito','ficha'=>$ficha],200);
+        // }else{
+        //     if ($pertra->pt_estado='OBSERVADO') {
+        //         $ficha->fic_tipo = 'RECONSULTA';
+        //         $ficha->save();
+        //         return response()->json(['status'=>'ok','mensaje'=>'exito','ficha'=>$ficha],200);
+        //     }else{
+        //         if ($pertra->pt_estado='VENCIDO') {
+        //             return response()->json(['errors'=>array(['code'=>404,'message'=>'Este trámite ya esta vencido debe, iniciar el trámite nuevamente'])],404);
+        //         }else{
+        //             if ($pertra->pt_estado='CONCLUIDO') {
+        //                 return response()->json(['errors'=>array(['code'=>404,'message'=>'Este trámite ya esta concluido.'])],404);
+        //             }else{
+        //                 return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra el tramite'])],404);
+        //             }
+        //         }
+        //     }
+        // }
 
 
     }

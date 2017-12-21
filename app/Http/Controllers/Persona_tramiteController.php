@@ -14,6 +14,7 @@ use App\Models\Zona;
 use App\Models\Municipio;
 use App\Models\Provincia;
 use App\Models\Departamento;
+use App\Models\Ficha;
 
 
 class Persona_tramiteController extends Controller
@@ -145,7 +146,7 @@ class Persona_tramiteController extends Controller
         ->orderBy('persona_tramite.created_at')
         ->first();
 
-        if (count($persona_tramite)!=0)
+        if ($persona_tramite)
         {    
             $idepersonatramite=$persona_tramite->pt_id;
             $existe=Muestra::select('mue_num_muestra','mue_fecha','persona_tramite.pt_id','pt_numero_tramite','per_ci_expedido','per_nombres','per_apellido_primero','per_apellido_segundo','per_fecha_nacimiento')
@@ -154,12 +155,46 @@ class Persona_tramiteController extends Controller
             ->where('muestra.pt_id', $idepersonatramite)
             ->where('muestra.mue_fecha', $hoy)
             ->get();
-            if(count($existe)!=0){
+            if($existe){
                 return response()->json(['status'=>'ok','msg'=>"con numero de muestra",'muestra'=>$existe],200); 
             }
         }
         
          return response()->json(['status'=>'ok','msg'=>'sin numero de muestra',"persona_tramite"=>$persona_tramite], 200);
+        }
+
+
+
+    public function buscar_persona_tramite_ficha($per_ci)
+    {
+        $hoy=date('Y-m-d');
+
+
+        $concluido="CONCLUIDO";
+        $vencido="VENCIDO";
+        $persona_tramite = Persona_tramite::select('persona_tramite.pt_id','persona_tramite.pt_estado_tramite','per_nombres','per_apellido_primero', 'per_apellido_segundo', 'per_ci', 'per_ci_expedido')
+        ->where('persona_tramite.pt_estado_tramite','!=',$concluido)
+        ->where('persona_tramite.pt_estado_tramite','!=',$vencido)
+        ->join('persona', 'persona.per_id','=', 'persona_tramite.per_id')
+        ->where('persona.per_ci', $per_ci)
+        ->orderBy('persona_tramite.created_at')
+        ->first();
+
+        if ($persona_tramite)
+        {    
+            $idepersonatramite=$persona_tramite->pt_id;
+            $existe=Ficha::select('fic_numero','fic_fecha','persona_tramite.pt_id','pt_numero_tramite','per_ci','per_ci_expedido','per_nombres','per_apellido_primero','per_apellido_segundo','per_fecha_nacimiento')
+            ->join('persona_tramite','persona_tramite.pt_id','=','ficha.pt_id')
+            ->join('persona','persona.per_id','=','persona_tramite.per_id')
+            ->where('ficha.pt_id', $idepersonatramite)
+            ->where('ficha.fic_fecha', $hoy)
+            ->get();
+            if($existe){
+                return response()->json(['status'=>'ok','msg'=>"con numero de ficha",'ficha'=>$existe],200); 
+            }
+        }
+        
+         return response()->json(['status'=>'ok','msg'=>'sin numero de ficha',"persona_tramite"=>$persona_tramite], 200);
         }
 
 
