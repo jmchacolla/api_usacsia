@@ -252,6 +252,15 @@ class Persona_tramiteController extends Controller
        
     }
 
+    public function ultimafichaatendida($pt_id)
+    {
+        $ficha=Ficha::where('ficha.pt_id', $pt_id)/*->where('fic_estado','=','ATENDIDO')*/->orderBy('ficha.created_at')->first();
+        if (!$ficha) {
+            return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra la registro con ese código.'])],404);
+        }
+        return response()->json(['status'=>'ok','ficha'=>$ficha],200);
+    }
+
 
 
 }

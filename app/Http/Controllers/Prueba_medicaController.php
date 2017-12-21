@@ -39,6 +39,7 @@ class Prueba_medicaController extends Controller
 		}  
 		$prueba_medica= new Prueba_medica();
 		$prueba_medica->pt_id=$request->pt_id;
+        $prueba_medica->fic_id=$request->fic_id;
 		$prueba_medica->ser_id=$request->ser_id;//-----medicina general
 		$prueba_medica->fun_id = $request->fun_id;//---debe cachearse de sesion
 		$prueba_medica->pm_fr=$request->pm_fr;

@@ -88,6 +88,9 @@ Route::group(['middleware' => 'cors'], function ()
     Route::get('tramites_x_tipo_tramite/{tra_id}','Persona_tramiteController@listar_x_tipo_tramite');
     // jhon------------------------------fichas por fecha
     Route::get('fichasfecha','FichaController@fichasfecha');
+    //jhon ultima ficha atendida del tramite
+    Route::get('ultimafichaatendida/{pt_id}','Persona_tramiteController@ultimafichaatendida');
+
     /*/PERSONA_TRAMITE*///============================================================
 /*PRUEBA MEDICA*/
     Route::resource('prueba_medica','Prueba_medicaController',['only' => ['store', 'update', 'destroy', 'show','index']]);
