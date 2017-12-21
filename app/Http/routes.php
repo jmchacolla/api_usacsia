@@ -82,6 +82,8 @@ Route::group(['middleware' => 'cors'], function ()
     Route::resource('pers_tra','Persona_tramiteController',['only' => ['store', 'update', 'destroy', 'show','index']]);
     //buscar persona_tramite
     Route::get('buscar_persona_tramite/{per_ci}','Persona_tramiteController@buscar_persona_tramite');
+    Route::get('buscar_persona_tramite_ficha/{per_ci}','Persona_tramiteController@buscar_persona_tramite_ficha');
+
 
     Route::get('tramites_x_tipo_tramite/{tra_id}','Persona_tramiteController@listar_x_tipo_tramite');
     // jhon------------------------------fichas por fecha
